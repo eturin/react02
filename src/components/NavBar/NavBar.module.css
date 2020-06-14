@@ -1,0 +1,26 @@
+.NavBar{
+    grid-area: n;
+    margin-top: 3px;
+    background: burlywood;
+    border-radius: 5px;
+}
+.Menu{
+    padding: 15px;
+}
+.Menu div{
+    margin-left: 2px;
+}
+.Menu a{
+    color: azure;
+    text-decoration: none;
+    font-style: revert;
+    font-size: small;
+    line-height: 0.7em;
+}
+.Menu p{
+    line-height: 0.9em;
+}
+.Menu a.ActiveLink{
+    color: black;
+    font-weight: bold;
+}

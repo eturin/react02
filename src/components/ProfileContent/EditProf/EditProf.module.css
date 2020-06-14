@@ -1,0 +1,67 @@
+.EditProf{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: grid;
+    grid-template-areas:
+        'i i n n b'
+        'i i a j j'
+        'i i a j j'
+        'i i a j j'
+        'i i a j j'
+        'i i a j j'
+        'c c a j j'
+        'c c a j j';
+    grid-template-columns: 100px 100px  auto auto auto;
+    grid-template-rows: 25px 25px 25px 25px 25px 25px 22px auto;
+}
+.Title{
+    font-size: larger;
+    width: 200px;
+}
+.Name{
+    grid-area: n;
+    margin-top: 2px;
+    margin-left: 3px;
+    height: 21px;
+}
+.Name input{width: 100%;}
+.AboutMe{
+    grid-area: a;
+    padding-top: 20px;
+    margin-left: 3px;
+}
+.AboutMe textarea{
+    width: 98%;
+    height: 91%;
+}
+.Button{
+    grid-area: b;
+    margin-left: 10px;
+}
+.Job{
+    grid-area: j;
+    display: grid;
+    grid-template-areas:
+        'jb'
+        'jd';
+    grid-template-rows: 45px auto;
+    margin-left: 3px;
+}
+.LookingForAJob           { grid-area: jb; padding-top: 20px; }
+.LookingForAJobDescription{ grid-area: jd; }
+.LookingForAJobDescription textarea{
+    width: 98%;
+    height: 98%;
+}
+.LookingForAJobDescription span{  display: block;}
+
+.Contacts{   grid-area: c; width: 200px; }
+.Contacts span{display: block; width: 200px; margin-top: 7px; }
+.Img {width: 15px;}
+.Github   {grid-area: Github;   margin-top: 2px; width: 200px; }
+.Vk       {grid-area: Vk;       margin-top: 2px; width: 200px; }
+.Facebook {grid-area: Facebook; margin-top: 2px; width: 200px; }
+.Instagram{grid-area: Instagram;margin-top: 2px; width: 200px; }
+.Twitter  {grid-area: Twitter;  margin-top: 2px; width: 200px; }
+.Youtube  {grid-area: Youtube;  margin-top: 2px; width: 200px; }
+.Website  {grid-area: Website;  margin-top: 2px; width: 200px; }

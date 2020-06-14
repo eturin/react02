@@ -1,0 +1,10 @@
+.ErrorControl{
+    color: red;
+}
+.ErrorSpan{
+    text-align: right;
+    color: red;
+    font-size: smaller;
+    font-weight: lighter;
+    vertical-align: top;
+}

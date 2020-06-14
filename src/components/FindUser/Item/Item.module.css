@@ -1,0 +1,73 @@
+.Item{
+    display: grid;
+    grid-template-areas:
+        "ab block";
+    grid-template-columns: 70px auto;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}
+.AvaButton{
+    grid-area: ab;
+}
+.Img{
+    height: 60px;
+    border-radius: 50%;
+}
+.ButtonActive{
+    background-color: chartreuse;
+    border: none;
+    padding: 5px;
+    text-align: right;
+    width: 30px;
+    text-decoration: none;
+    font-size: xx-small;
+    font-weight: bold;
+    color: black;
+    margin: 4px 2px;
+    border-radius: 20px;
+    align-self: center;
+}
+.ButtonInActive{
+    background-color: darkgray;
+    border: none;
+    padding: 5px;
+    text-align: left;
+    width: 30px;
+    text-decoration: none;
+    font-size: xx-small;
+    font-weight: bold;
+    color: black;
+    margin: 4px 2px;
+    border-radius: 20px;
+}
+.Block{
+    display: grid;
+    grid-template-areas:
+            "name country"
+            "cmt city";
+    grid-template-columns: auto 100px;
+    grid-template-rows: 1fr 2fr;
+    border-radius: 15px;
+    border-color: bisque;
+    border-style: solid;
+}
+.Name{
+    grid-area: name;
+    margin: 5px 5px;
+    font-weight: bold;
+}
+.Country{
+    grid-area: country;
+    margin: 5px 5px 0px 0px;
+    font-weight: bold;
+}
+.City{
+    grid-area: city;
+    margin: 0px 5px 5px 0px;
+    font-weight: bold;
+}
+.Comment{
+    grid-area: cmt;
+    margin: 0px 0px 5px 5px;
+}
+

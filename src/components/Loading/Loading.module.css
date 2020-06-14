@@ -1,0 +1,10 @@
+.Loading{
+    border-radius: 5px;
+    text-align: center;
+}
+.ImgBack{
+    transform: scale(-1, 1)
+}
+.Loading img{
+    height: 160px;
+}

@@ -1,0 +1,14 @@
+.Login{
+    padding: 10px;
+}
+.Form{
+    width: 350px;
+    text-align: center;
+}
+.Name{ }
+.Name input{width: 350px;}
+.Pass{ margin-top: 5px; }
+.Pass input{width: 350px;}
+.Rem { margin-top: 5px; text-align: left;}
+.But { margin-top: 5px; text-align: right}
+.Error {color: red; font-weight: bold;}

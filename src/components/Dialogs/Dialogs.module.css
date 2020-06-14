@@ -1,0 +1,28 @@
+.Dialogs{
+    display: grid;
+    grid-template-areas: "n m";
+    grid-template-columns: 1fr 5fr;
+    margin-top: 3px;
+}
+
+.Names{
+    padding: 20px;
+    grid-area: n;
+    border-radius: 5px;
+    border: darkgrey;
+    border-style: solid;
+    margin-left: 3px;
+}
+.Names span{
+    font-weight: bold;
+}
+.Loading{
+    border-radius: 5px;
+    text-align: center;
+}
+.ImgBack{
+    transform: scale(-1, 1);
+    size: 30px;
+}
+
+

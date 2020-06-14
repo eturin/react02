@@ -1,0 +1,13 @@
+.ProfileContent{
+    margin-top: 3px;
+    margin-left: 3px;
+}
+.ContentHeader{
+    grid-area: h;
+}
+.ProfileContent .ContentHeader img{
+    width: 100%;
+    height: 150px;
+}
+.ProfileContent Prof{}
+.ProfileContent Posts{}

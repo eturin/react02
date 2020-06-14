@@ -1,0 +1,37 @@
+.Prof{
+    display: grid;
+    grid-template-areas:
+            "aa nn dj"
+            "aa st jj"
+            "aa ss jj"
+            "aa ss jj";
+    grid-template-rows: 1fr 1fr 5fr 1fr;
+    grid-template-columns: 150px auto auto;
+}
+.AvatarImg{
+    width: 150px;
+    height: 150px;
+}
+.Avatar    { grid-area: aa;}
+.Name      { grid-area: nn; font-weight: bold;}
+.Status    { grid-area: st;}
+.About     { grid-area: ss;}
+.Img {width: 15px;}
+
+.Contacts  {
+    grid-area: cc;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+}
+
+.DJob{ grid-area: dj; font-weight: bold;}
+.ActiveLookingForAJobDescription {grid-area: jj; }
+.LookingForAJobDescription {grid-area: jj; color: darkgrey;}
+
+
+
+
+
+
+

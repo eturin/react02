@@ -1,0 +1,35 @@
+.ItemOver{
+    display: grid;
+    grid-template:
+    "a b";
+    grid-template-columns: 50px auto;
+    margin-top: 3px;
+}
+.ItemMy{
+    display: grid;
+    grid-template:
+            "b a";
+    grid-template-columns: auto 50px;
+    margin-top: 3px;
+}
+.Avatar{
+    grid-area: a;
+}
+.Avatar img{
+    height: 50px;
+    border-radius: 30px;
+}
+.TextMy{
+    padding: 10px;
+    grid-area: b;
+    border-color: bisque;
+    border-style: groove;
+    border-radius: 5px;
+    text-align: right;
+}
+.TextOther{
+    padding: 10px;
+    grid-area: b;
+    background: bisque;
+    border-radius: 5px;
+}

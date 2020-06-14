@@ -1,0 +1,18 @@
+.Item{
+    display: grid;
+    grid-template-areas:
+            "i n";
+    grid-template-columns: 20px auto;
+}
+.ActiveLink{
+    color: darkgoldenrod;
+}
+.A{
+    grid-area: n;
+    text-decoration: none;
+}
+
+.Img{
+    grid-area: i;
+    width: 20px;
+}

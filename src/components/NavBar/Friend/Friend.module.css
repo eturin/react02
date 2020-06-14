@@ -1,0 +1,20 @@
+.Friend{
+    text-align: center;
+    display: grid;
+    grid-template-areas:
+            "i"
+            "n";
+}
+.Img{
+    grid-area: i;
+}
+.Img img{
+    border-radius: 50%;
+    width: 30px;
+}
+.Name{
+    grid-area: n;
+    text-align: center;
+    font-size: xx-small;
+    color: azure;
+}

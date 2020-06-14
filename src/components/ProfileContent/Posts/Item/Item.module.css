@@ -1,0 +1,31 @@
+.Item{
+    display: grid;
+    grid-template:
+    "a b"
+    "a c";
+    grid-template-columns: 50px auto;
+    grid-template-rows: auto 15px;
+    background: bisque;
+    margin-top: 3px;
+}
+.Avatar{
+    grid-area: a;
+}
+.Avatar img{
+    height: 50px;
+    border-radius: 30px;
+
+}
+.Text{
+    grid-area: b;
+}
+.Control{
+    grid-area: c;
+    text-align: right;
+}
+.LikeCnt{
+    font-weight: 600;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}

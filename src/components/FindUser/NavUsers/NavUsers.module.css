@@ -1,0 +1,32 @@
+.NavUsers{
+    text-align: right;
+}
+.Span{
+    background: darkgoldenrod;
+    color: white;
+    width: 50px;
+    border-radius: 30%;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.ActiveSpan{
+    background: darkgoldenrod;
+    font-weight: bold;
+    font-size: large;
+    color: bisque;
+    width: 10px;
+    border-radius: 30%;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-style: solid;
+}
+select{
+    background: darkgoldenrod;
+    color: white;
+    border-radius: 30%;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: large;
+}
