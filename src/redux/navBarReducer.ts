@@ -1,4 +1,14 @@
-let initState = {
+export type FriendType = {
+    img: string;
+    name: string;
+    id: string;
+}
+export type NavBarStateType = {
+    FriendsPage: {
+        mFriends: Array<FriendType>;
+    }
+}
+let initState:NavBarStateType = {
     FriendsPage: {
         mFriends: [
             {img: "/ava.jpeg" , name: "Дмитрий", id: "d"},
@@ -8,11 +18,11 @@ let initState = {
     }
 };
 
-const navBarReducer = (state=initState, action) => {
+const navBarReducer = (state=initState, action:any):NavBarStateType => {
     let stateCopy = state;
     return stateCopy;
 }
 
-export const getFriends = (state) => state.FriendsPage.mFriends;
+export const getFriends = (state:any):Array<FriendType> => state.FriendsPage.mFriends;
 
 export  default navBarReducer;

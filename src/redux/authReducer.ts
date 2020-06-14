@@ -1,12 +1,29 @@
 import {aXiOs} from '../components/UTILS/utils'
 import {stopSubmit} from 'redux-form'
 
-export const SET_ME           ='auth/SetMe';
-export const SET_LOADING_ME   ='auth/SetLoadingMe';
-export const SET_CAPTCHA      ='auth/SetCaptcha';
-export const SET_IMG          ='auth/SetImg';
+const SET_ME           ='auth/SetMe';
+const SET_LOADING_ME   ='auth/SetLoadingMe';
+const SET_CAPTCHA      ='auth/SetCaptcha';
+const SET_IMG          ='auth/SetImg';
+export type AuthSET_ME         = { type: typeof SET_ME;         data:AuthDataType};
+export type AuthSET_LOADING_ME = { type: typeof SET_LOADING_ME;                  };
+export type AuthSET_CAPTCHA    = { type: typeof SET_CAPTCHA;    url:string       };
+export type AuthSET_IMG        = { type: typeof SET_IMG;        id:number,img:string};
 
-let initState = {
+export type AuthDataType = {
+    id   : number | undefined,
+    email: string | undefined,
+    login: string | undefined
+}
+export type AuthStateType = {
+    loading: boolean,
+    cnt: number,
+    data: AuthDataType,
+    img  : string | undefined,
+    captcha: string | undefined
+}
+
+let initState: AuthStateType = {
     loading: false,
     cnt: 0,
     data: {
@@ -18,33 +35,38 @@ let initState = {
     captcha: undefined
 }
 
-const authReducer = (state = initState, action)=>{
+const authReducer = (state = initState, action:any):AuthStateType=>{
     let copyState = state;
 
-    if(action.type === SET_ME) {
-        copyState = {
-            ...state,
-            data: {...action.data},
-            loading: false,
-            captcha: undefined
-        }
-    }else if(action.type === SET_LOADING_ME) {
-        copyState = {
-            ...initState,
-            loading: true,
-            cnt: state.cnt + 1
-        }
-    }else if(action.type === SET_CAPTCHA) {
-        copyState = {
-            ...state,
-            captcha: action.url
-        }
-    }else if(action.type === SET_IMG){
-        if(action.id === state.data.id)
+    switch (action.type){
+        case SET_ME:
             copyState = {
                 ...state,
-                img: action.img
-            }
+                data: {...action.data},
+                loading: false,
+                captcha: undefined
+            };
+            break;
+        case SET_LOADING_ME:
+            copyState = {
+                ...initState,
+                loading: true,
+                cnt: state.cnt + 1
+            };
+            break;
+        case SET_CAPTCHA:
+            copyState = {
+                ...state,
+                captcha: action.url
+            };
+            break;
+        case SET_IMG:
+            if(action.id === state.data.id)
+                copyState = {
+                    ...state,
+                    img: action.img
+                }
+            break;
     }
 
     return copyState;
@@ -53,14 +75,14 @@ const authReducer = (state = initState, action)=>{
 export default authReducer;
 
 //action creaters
-export const setMe          = (data)                              => ({ type: SET_ME           , data: data                                       })
-export const setLoadingMe   = ()                                  => ({ type: SET_LOADING_ME                                                      })
-export const setCaptha      = (url)                               => ({ type: SET_CAPTCHA      , url: url                                         })
-export const setImg         = (id,img)                            => ({ type: SET_IMG          , id: id, img:img                                  });
+export const setMe          = (data:AuthDataType):AuthSET_ME      => ({ type: SET_ME           , data: data                                       });
+export const setLoadingMe   = ():AuthSET_LOADING_ME               => ({ type: SET_LOADING_ME                                                      });
+export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SET_CAPTCHA      , url: url                                         });
+export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
 export const authMe          = () => {
-    return async (dispatch) => {
+    return async (dispatch:any) => {
         dispatch(setLoadingMe());
         try {
             let resp = await aXiOs.get(`auth/me`);
@@ -79,21 +101,22 @@ export const authMe          = () => {
         }
     }
 }
-export const logIn           = (data) => {
-    return async (dispatch) => {
+
+export const logIn           = (form:any) => {
+    return async (dispatch:any) => {
         try {
             let resp = await aXiOs.post(`auth/login`, {
-                email: data.login,
-                password: data.pwd,
-                rememberMe: data.rememberMe,
-                captcha: data.captcha
+                email     : form.login,
+                password  : form.pwd,
+                rememberMe: form.rememberMe,
+                captcha   : form.captcha
             });
             if (resp.data.resultCode === 0) {
                 authMe()(dispatch);
             } else if (resp.data.resultCode === 1) {
                 dispatch(stopSubmit('login', {
-                    login: 'error',
-                    pwd: 'error',
+                    login : 'error',
+                    pwd   : 'error',
                     _error: resp.data.messages && resp.data.messages.length > 0 ? resp.data.messages[0] : undefined
                 }));
             } else if (resp.data.resultCode === 10) {
@@ -116,7 +139,7 @@ export const logIn           = (data) => {
     }
 }
 export const logOut          = () =>{
-    return async (dispatch) => {
+    return async (dispatch:any) => {
         try {
             let resp = await aXiOs.post(`auth/logout`);
             if (resp.data.resultCode === 0)

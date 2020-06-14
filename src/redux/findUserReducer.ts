@@ -1,70 +1,87 @@
 import {aXiOs} from "../components/UTILS/utils";
 
-export const ADD_USERS        ='findUser/AddUsers';
-export const SET_PAGE         ='findUser/SetPage';
-export const SET_COUNT        ='findUser/SetCount';
-export const FOLLOW           ='findUser/onFollow';
-export const IS_WATING_FOLLOW ='findUser/isWatingFollow';
-
-let initState ={
+const ADD_USERS        ='findUser/AddUsers';
+const SET_PAGE         ='findUser/SetPage';
+const SET_COUNT        ='findUser/SetCount';
+const FOLLOW           ='findUser/onFollow';
+const IS_WATING_FOLLOW ='findUser/isWatingFollow';
+export type FinfUserADD_USERS        ={type: typeof ADD_USERS; cnt:number; page:number; mUsers: Array<UserType>;totalCount:number;};
+export type FinfUserSET_PAGE         ={type: typeof SET_PAGE; Page:number};
+export type FinfUserSET_COUNT        ={type: typeof SET_COUNT; count:number};
+export type FinfUserFOLLOW           ={type: typeof FOLLOW; id:number; isFollow:boolean};
+export type FinfUserIS_WATING_FOLLOW ={type: typeof IS_WATING_FOLLOW; id:number};
+export type FindUserStateType = {
+    count  : number;
+    Page: number;
+    totalPage: number;
+    mUsers : Array<UserType>;
+}
+export type UserType ={
+    page     : number;
+    id       : number;
+    name     : string;
+    img      : string | null;
+    comment  : string;
+    follow   : boolean;
+    isWaiting: boolean;
+}
+let initState:FindUserStateType ={
     count  : 3,
     Page: 1,
     totalPage: 0,
-    mUsers :[
-        /*{id:0,name:"Димыч",img:"/ava.jpeg" ,country:"Беларусия",city:"Минск"   ,comment:"Красава",follow:false},
-        {id:1,name:"Сашок",img:"/ava2.jpeg",country:"USA"      ,city:"New-York",comment:"kika"   ,follow:true },
-        {id:2,name:"Стас" ,img:"/ava.jpeg" ,country:"Россия"   ,city:"Москва"  ,comment:"Круть"  ,follow:true }*/
-    ]
+    mUsers :[]
 }
 
-const findUserReducer = (state = initState, action) =>{
+const findUserReducer = (state = initState, action:any):FindUserStateType =>{
     let stateCopy = state;
 
-    if(action.type===IS_WATING_FOLLOW) {
-        stateCopy = {
-            ...stateCopy,
-            mUsers: stateCopy.mUsers.map(x => x.id === action.id ? {...x, isWaiting: true} : x)
-        };
-    }else if(action.type===FOLLOW){
-        stateCopy = {
-            ...stateCopy,
-            mUsers: stateCopy.mUsers.map(x=> x.id===action.id ? {...x, follow:!action.isFollow, isWaiting: false} : x )
-        };
-    }else if (action.type===SET_PAGE) {
-        stateCopy = {
-            ...stateCopy,
-            mUsers   : [],
-            Page     : action.Page
-        };
-    }else if(action.type === SET_COUNT){
-        stateCopy = {
-            ...stateCopy,
-            mUsers   : [],
-            count    : action.count,
-            Page     : 1,
-            totalPage: 0
-        };
-    }else if (action.type === ADD_USERS){
-        let mUsers = action.mUsers.map(x => (
-                    {
-                        page     : action.page,
-                        id       : x.id,
-                        name     : x.name,
-                        img      : x.photos.large,
-                        country  : null,
-                        city     : null,
-                        comment  : x.status,
-                        follow   : !x.followed,
-                        isWaiting:false
-                    })
-        );
-        stateCopy = {
-            ...stateCopy,
-            count    : action.cnt,
-            Page     : action.page,
-            mUsers   : [...mUsers],
-            totalPage: Math.ceil(action.totalCount/action.cnt)
-        };
+    switch (action.type) {
+
+        case IS_WATING_FOLLOW:
+            stateCopy = {
+                ...stateCopy,
+                mUsers: stateCopy.mUsers.map((x: any) => x.id === action.id ? {...x, isWaiting: true} : x)
+            };
+            break;
+        case FOLLOW:
+            stateCopy = {
+                ...stateCopy,
+                mUsers: stateCopy.mUsers.map((x:any)=> x.id===action.id ? {...x, follow:!action.isFollow, isWaiting: false} : x )
+            };
+            break;
+        case SET_PAGE:
+            stateCopy = {
+                ...stateCopy,
+                mUsers   : [],
+                Page     : action.Page
+            };
+            break;
+        case SET_COUNT:
+            stateCopy = {
+                ...stateCopy,
+                mUsers   : [],
+                count    : action.count,
+                Page     : 1,
+                totalPage: 0
+            };
+            break;
+        case ADD_USERS:
+            stateCopy = {
+                ...stateCopy,
+                count    : action.cnt,
+                Page     : action.page,
+                mUsers   : action.mUsers.map((x:any) => (
+                        {
+                            page     : action.page,
+                            id       : x.id,
+                            name     : x.name,
+                            img      : x.photos.large,
+                            comment  : x.status,
+                            follow   : !x.followed,
+                            isWaiting:false
+                        })),
+                totalPage: Math.ceil(action.totalCount/action.cnt)
+            };
     }
 
     return stateCopy;
@@ -73,15 +90,15 @@ const findUserReducer = (state = initState, action) =>{
 export default findUserReducer;
 
 //action creaters
-export const onFollow       = (id,isFollow)                       => ({ type: FOLLOW           , id:id, isFollow:isFollow                                  });
-export const isWatingFollow = (id)                                => ({ type: IS_WATING_FOLLOW , id:id                                                     });
-export const addUsers       = (cnt, page, mUsers,totalCount)      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
-export const setPage        = (Page)                              => ({ type: SET_PAGE         , Page:Page                                                 });
-export const setCount       = (count)                             => ({ type: SET_COUNT        , count:count                                               });
+export const onFollow       = (id:number,isFollow:boolean):FinfUserFOLLOW                 => ({ type: FOLLOW           , id:id, isFollow:isFollow                                  });
+export const isWatingFollow = (id:number):FinfUserIS_WATING_FOLLOW                        => ({ type: IS_WATING_FOLLOW , id:id                                                     });
+export const addUsers       = (cnt:number, page:number, mUsers: Array<UserType>,totalCount:number):FinfUserADD_USERS      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
+export const setPage        = (Page:number):FinfUserSET_PAGE                              => ({ type: SET_PAGE         , Page:Page                                                 });
+export const setCount       = (count:number):FinfUserSET_COUNT                            => ({ type: SET_COUNT        , count:count                                               });
 
 //thunk creaters
-export const Follow_UnFollow = (isFollow,id) => {
-    return async (dispatch) => {
+export const Follow_UnFollow = (isFollow:boolean,id:number) => {
+    return async (dispatch:any) => {
         dispatch(isWatingFollow(id));
         try {
             if (isFollow) {
@@ -106,8 +123,8 @@ export const Follow_UnFollow = (isFollow,id) => {
         }
     }
 }
-export const getMore         = (count,page) => {
-    return async (dispatch) => {
+export const getMore         = (count:number,page:number) => {
+    return async (dispatch:any) => {
         try{
             let resp = await aXiOs.get(`users?page=${page}&count=${count}`);
             dispatch(addUsers(count, page, resp.data.items, resp.data.totalCount));

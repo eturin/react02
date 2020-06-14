@@ -1,41 +1,55 @@
 import {aXiOs} from "../components/UTILS/utils";
 
-export const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
-export const SET_DIALOGS         = 'dialogPage/SetDialogs';
-export const SET_LOADING_MESSAGES= 'dialogPage/SetLoadingMessages';
-export const SET_MESSAGES        = 'dialogPage/SetMessages';
-export const SET_SENDING         = 'dialogPage/SetSending';
-export const ADD_TO_DILOGS       = 'dialogPage/AddToDilogs';
+const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
+const SET_DIALOGS         = 'dialogPage/SetDialogs';
+const SET_LOADING_MESSAGES= 'dialogPage/SetLoadingMessages';
+const SET_MESSAGES        = 'dialogPage/SetMessages';
+const SET_SENDING         = 'dialogPage/SetSending';
+const ADD_TO_DILOGS       = 'dialogPage/AddToDilogs';
+export type DialogSET_LOADING_DIALOGS = {type: typeof SET_LOADING_DIALOGS};
+export type DialogSET_DIALOGS         = {type: typeof SET_DIALOGS;data:any};
+export type DialogSET_LOADING_MESSAGES= {type: typeof SET_LOADING_MESSAGES; id:number};
+export type DialogSET_MESSAGES        = {type: typeof SET_MESSAGES; id:number; data:DialogMessageType};
+export type DialogSET_SENDING         = {type: typeof SET_SENDING; idDilog:number};
+export type DialogADD_TO_DILOGS       = {type: typeof ADD_TO_DILOGS;id:number; img:string; userName:string};
 
 export type DialogMessageType = {
-    id: string; //"45612b96-7686-4f1b-a75f-f59871dc38cb"
-    body: string;
+    id            : string; //"45612b96-7686-4f1b-a75f-f59871dc38cb"
+    body          : string;
     translatedBody: string | null;
-    addedAt: string;
-    senderId: number;
-    senderName: string;
-    recipientId: number;
-    viewed: boolean
+    addedAt       : string;
+    senderId      : number;
+    senderName    : string;
+    recipientId   : number;
+    viewed        : boolean
 }
-export type DialogItem = {
-    id: number;
-    img?: string;
-    userName: string;
-    hasNewMessages?: boolean;
-    lastDialogActivityDate?: string;
-    lastUserActivityDate?: string;
-    newMessagesCount?: number;
+export type DialogItemType = {
+    id                     : number;
+    img?                   : string;
+    userName               : string;
+    hasNewMessages?        : boolean |undefined;
+    lastDialogActivityDate?: string|undefined;
+    lastUserActivityDate?  : string|undefined;
+    newMessagesCount?      : number|undefined;
 }
-let initState =  {
+export type DialogStateType = {
+    loading        : boolean,
+    Dialogs        : Array<DialogItemType>,
+    loadingMessages: boolean,
+    Messages       : Array<DialogMessageType>,
+    sending        : boolean,
+    id             : number | undefined
+}
+let initState:DialogStateType =  {
     loading: false,
-    Dialogs: [] as Array<DialogItem>,
+    Dialogs: [],
     loadingMessages: false,
-    Messages: [] as Array<DialogMessageType>,
+    Messages: [],
     sending: false,
     id: undefined
 };
 
-const dialogsPageReducer = (state = initState, action:any) =>{
+const dialogsPageReducer = (state = initState, action:any):DialogStateType =>{
     let stateCopy =state;
     switch (action.type) {
         case SET_LOADING_DIALOGS:
@@ -53,8 +67,13 @@ const dialogsPageReducer = (state = initState, action:any) =>{
                 ...state,
                 loading: false,
                 Dialogs: action.data.map((x:any) => ({
-                    ...x,
-                    img: x.photos.large ? x.photos.large : x.photos.small
+                    id                     : x.id,
+                    userName               : x.userName,
+                    hasNewMessages         : x.hasNewMessages,
+                    lastDialogActivityDate : x.lastDialogActivityDate,
+                    lastUserActivityDate   : x.lastUserActivityDate,
+                    newMessagesCount       : x.newMessagesCount,
+                    img                    : x.photos.large ? x.photos.large : x.photos.small
                 })),
                 loadingMessages: false,
                 Messages: [],
@@ -95,7 +114,7 @@ const dialogsPageReducer = (state = initState, action:any) =>{
                             img: action.img,
                             userName: action.userName
                         }
-                        ]
+                    ]
                 };
             break;
         default:
@@ -107,12 +126,12 @@ const dialogsPageReducer = (state = initState, action:any) =>{
 export default dialogsPageReducer;
 
 //action creaters
-export const setLoadingDialogs = () => ({type: SET_LOADING_DIALOGS})
-export const setDialogs        = (data:any)                 =>({type: SET_DIALOGS, data: data})
-export const setLoadingMessages= (id:number)                =>({type: SET_LOADING_MESSAGES, id:id})
-export const setMessages       = (id:number,data:any)       =>({type: SET_MESSAGES, id: id ,data: data})
-export const setSending        = (idDilog:number)           =>({type: SET_SENDING, idDilog:idDilog})
-export const addToMyDilogs     = (id:number, img:string, userName:string) => ({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
+export const setLoadingDialogs = ():DialogSET_LOADING_DIALOGS                                 => ({type: SET_LOADING_DIALOGS})
+export const setDialogs        = (data:any):DialogSET_DIALOGS                                 =>({type: SET_DIALOGS, data: data})
+export const setLoadingMessages= (id:number):DialogSET_LOADING_MESSAGES                       =>({type: SET_LOADING_MESSAGES, id:id})
+export const setMessages       = (id:number,data:DialogMessageType):DialogSET_MESSAGES        =>({type: SET_MESSAGES, id: id ,data: data})
+export const setSending        = (idDilog:number):DialogSET_SENDING                           =>({type: SET_SENDING, idDilog:idDilog})
+export const addToMyDilogs     = (id:number, img:string, userName:string):DialogADD_TO_DILOGS => ({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
 
 //thunk creaters
 export const addToDilogs =(id:number)=>{

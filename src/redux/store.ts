@@ -1,5 +1,5 @@
-import {applyMiddleware, createStore, compose, combineReducers} from "redux";
-import ThunkMiddleware from "redux-thunk";
+import {applyMiddleware, createStore, compose, combineReducers} from 'redux';
+import ThunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form'
 
 import dialogsPageReducer        from "./dialogsPageReducer";

@@ -2,13 +2,48 @@ import {aXiOs} from "../components/UTILS/utils";
 import {stopSubmit} from "redux-form";
 import {setImg} from "./authReducer";
 
-export const SET_PROFILE      ='profileContentPage/SetProfile';
-export const SET_STATUS       ='profileContentPage/SetStatus';
-export const SET_LOADING_P    ='profileContentPage/SetLoadingProfile';
-export const SET_SENDING      ='profileContentPage/SetSendingProfile';
-export const SET_IMG          ='profileContentPage/SetImage';
+const SET_PROFILE      ='profileContentPage/SetProfile';
+const SET_STATUS       ='profileContentPage/SetStatus';
+const SET_LOADING_P    ='profileContentPage/SetLoadingProfile';
+const SET_SENDING      ='profileContentPage/SetSendingProfile';
+const SET_IMG          ='profileContentPage/SetImage';
+export type ProfileSET_PROFILE      ={type: typeof SET_PROFILE;id:number;obj:any;};
+export type ProfileSET_STATUS       ={type: typeof SET_STATUS;id:number;status:string;};
+export type ProfileSET_LOADING_P    ={type: typeof SET_LOADING_P;id:number;};
+export type ProfileSET_SENDING      ={type: typeof SET_SENDING;};
+export type ProfileSET_IMG          ={type: typeof SET_IMG;id:number;img:string;};
 
-export let initState = {
+export type ProfileContactsType = {
+    github?: string | null;
+    vk?: string | null;
+    facebook?: string | null;
+    instagram?: string | null;
+    twitter?: string | null;
+    website?: string | null;
+    youtube?: string | null;
+    mainLink?: string | null;
+}
+export type ProfilePostType ={
+    id: number;
+    text: string;
+    img: string;
+    cnt: number;
+}
+export type ProfileStateType = {
+    mPosts: Array<ProfilePostType>;
+    id: number|undefined;
+    loading: boolean;
+    text: string;
+    status: string;
+    isSending: boolean;
+    aboutme: string;
+    lookingForAJob: boolean;
+    lookingForAJobDescription:string;
+    fullName: string;
+    contacts: ProfileContactsType;
+    img: string | null | undefined;
+}
+export let initState:ProfileStateType = {
     mPosts: [
         {id: 0, text: '123', img: '/predator.jpeg', cnt: 10},
         {id: 1, text: '321', img: '/predator.jpeg', cnt: 2},
@@ -37,13 +72,13 @@ export let initState = {
     img: "/ava.jpeg"
 };
 
-const profileContentPageReducer = (state = initState, action) => {
+const profileContentPageReducer = (state = initState, action:any):ProfileStateType => {
     let stateCopy = state;
     if(action.type === SET_IMG){
         if(action.id === state.id){
             stateCopy = {
                 ...state,
-                img                      : action.img.large!=null ? action.img.large: action.img.small
+                img  : action.img.large!=null ? action.img.large: action.img.small
             }
         }
     }else if(action.type === SET_PROFILE){
@@ -102,15 +137,15 @@ export const fAddPost = (state) => {
 export default profileContentPageReducer;
 
 //action creaters
-export const setProfile     = (id,obj)                            => ({ type: SET_PROFILE      , id: id, obj:obj                                  });
-export const setStatus      = (id,status)                         => ({ type: SET_STATUS       , id: id, status:status                            });
-export const setLoadingProf = (id)                                => ({ type: SET_LOADING_P    , id: id                                           });
-export const setSending     = ()                                  => ({ type: SET_SENDING                                                         });
-export const setImage       = (id,img)                            => ({ type: SET_IMG          , id: id, img: img                                 });
+export const setProfile     = (id:number,obj:any):ProfileSET_PROFILE                 => ({ type: SET_PROFILE      , id: id, obj:obj                                  });
+export const setStatus      = (id:number,status:string):ProfileSET_STATUS            => ({ type: SET_STATUS       , id: id, status:status                            });
+export const setLoadingProf = (id:number):ProfileSET_LOADING_P                       => ({ type: SET_LOADING_P    , id: id                                           });
+export const setSending     = ():ProfileSET_SENDING                                  => ({ type: SET_SENDING                                                         });
+export const setImage       = (id:number,img:string):ProfileSET_IMG                  => ({ type: SET_IMG          , id: id, img: img                                 });
 
 //thunk creaters
-export const sendImg         = (file,userId)=> {
-    return async (dispatch) => {
+export const sendImg         = (file:any,userId:number)=> {
+    return async (dispatch:any) => {
         try {
             let formdata = new FormData();
             formdata.append('image',file)
@@ -134,9 +169,8 @@ export const sendImg         = (file,userId)=> {
         }
     }
 }
-export const getProfile      = (id) => {
-    id=parseInt(id);
-    return async (dispatch) => {
+export const getProfile      = (id:number) => {
+    return async (dispatch:any) => {
         dispatch(setLoadingProf(id));
         try {
             let resp = await aXiOs.get(`profile/${id}`)
@@ -152,8 +186,8 @@ export const getProfile      = (id) => {
         }
     }
 }
-export const stopEditLine    = (id,source,text) =>{
-    return async (dispatch) => {
+export const stopEditLine    = (id:number,source:string,text:string) =>{
+    return async (dispatch:any) => {
         if(source==='status') {
             try {
                 let resp = await aXiOs.put(`/profile/status`, {status: text});
@@ -171,8 +205,8 @@ export const stopEditLine    = (id,source,text) =>{
     }
 }
 
-export const sendProf = (form) =>{
-    return async (dispatch) => {
+export const sendProf = (form:any) =>{
+    return async (dispatch:any) => {
         dispatch(setSending());
         try {
             let resp = await aXiOs.put(`/profile`, {
