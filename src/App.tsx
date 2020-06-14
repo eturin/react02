@@ -34,9 +34,6 @@ interface IRecipeProps {
 interface IRecipeState {}
 
 class App extends React.Component<IRecipeProps,IRecipeState> {
-  constructor(props:IRecipeProps) {
-    super(props);
-  }
   error = (promiseRejectionEvent:any) =>{
     alert(promiseRejectionEvent);
   }
