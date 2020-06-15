@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import { render } from '@testing-library/react';
 import { create } from "react-test-renderer"
 import Loading from "./Loading";
 
 describe('Loading', ()=> {
     test('Отрисовка', () => {
-        const obj = render(<Loading />);
+        const obj = render( <Loading />);
         const linkElement = obj.getByText(/Loading/i);
         expect(linkElement).toBeInTheDocument();
     });

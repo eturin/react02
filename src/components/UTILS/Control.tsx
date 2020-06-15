@@ -2,7 +2,7 @@ import React from "react";
 import css from './Control.module.css'
 
 const Control = (Component:any) => {
-    return ({input, meta, ...props}) => {
+    return ({input, meta, ...props}:any) => {
         const isError = meta.touched && meta.error;
         return (
             <>

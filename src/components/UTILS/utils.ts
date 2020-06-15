@@ -1,8 +1,6 @@
 import Axios from "axios";
 import {createSelector} from "reselect";
 
-
-
 export const aXiOs = Axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -38,37 +36,36 @@ const _passVal           =(state:any,val:any)=> val;
 const _getStateDialogs   =(state:any)    => state.DialogsPage.Dialogs;
 export const getImg = createSelector(
     [_getStateDialogs,_passVal],
-    (Dialogs, id)=> {
-                    return Dialogs.find(x=>x.id===id).img;
+    (Dialogs:any, id:number)=> {
+                    return Dialogs.find((x:any)=>x.id===id).img;
             }
 )
 export const getUserNameForDialog = createSelector(
     [_getStateDialogs,_passVal],
-    (Dialogs,id) =>{
-                    return  Dialogs.find(x=>x.id===id).userName;
+    (Dialogs:any,id:number) =>{
+                    return  Dialogs.find((x:any)=>x.id===id).userName;
             }
 )
 export const getStateDialogs   = createSelector(
     [_getStateDialogs],
-    (Dialogs)    => {
-                    return [...Dialogs].sort((a,b)=> a.lastDialogActivityDate-b.lastDialogActivityDate);
+    (Dialogs:any)    => {
+                    return [...Dialogs].sort((a:any,b:any)=> a.lastDialogActivityDate-b.lastDialogActivityDate);
             }
 )
 
 const _getStateMessages        =(state:any)    => ({id: state.DialogsPage.id, Messages: state.DialogsPage.Messages});
 export const getStateMessages = createSelector(
     [_getStateMessages, _passVal],
-    (obj, id) => {
-
-                    return obj.id === parseInt(id) ? [...obj.Messages].sort((a,b)=> a.addedAt-b.addedAt) : [];
+    (obj:any, id:number) => {
+                    return obj.id === id ? [...obj.Messages].sort((a:any,b:any)=> a.addedAt-b.addedAt) : [];
             }
 )
 
 export const getUsers          =(state:any)       => state.FindUserPage.mUsers;
 export const getUserByID       = createSelector(
     [getUsers,_passVal],
-    (Users,id) => {
-                    return Users.find(x => x.id===id);
+    (Users:any,id:number) => {
+                    return Users.find((x:any) => x.id===id);
              }
 )
 
