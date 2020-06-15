@@ -4,13 +4,13 @@ import {getImgMy, getMyID, getProf} from "../../UTILS/utils";
 import {getProfile, sendProf, sendImg} from "../../../redux/profileContentPageReducer";
 import {formValueSelector} from "redux-form";
 
-const mstp = (state)=>{
+const mstp = (state:any)=>{
     const selector = formValueSelector('editProf');
     return {
         id                 : getMyID(state),
         prof               : getProf(state),
         img                : getImgMy(state),
-        form_lookingForAJob:selector(state,'LookingForAJob')
+        form_lookingForAJob: selector(state,'LookingForAJob')
     };
 }
 const EditProfContainer = connect(mstp,{getProfile,sendProf,sendImg})(EditProf);

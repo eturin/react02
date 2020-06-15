@@ -6,12 +6,12 @@ import {Input, Textarea} from "../../UTILS/Control";
 import Img from "../Img/Img";
 
 
-const EditProf = (props) =>{
+const EditProf = (props:any) =>{
     //предварительная загрузка профиля
     useEffect(()=>{
         if(props.id !== props.prof.id)
             props.getProfile(props.id);
-    },[props, props.prof.id, props.id]);
+    },[props.prof.id, props.id]);
 
     if(props.prof.loading)
         return <Loading />
@@ -19,8 +19,9 @@ const EditProf = (props) =>{
         return <EditProfReduxForm {...props} onSubmit={props.sendProf}/>;
 }
 
-const EditForm = (props) =>{
+const EditForm = (props:any) =>{
     useEffect(()=>{
+        debugger;
         props.initialize({
             userId                   : props.id,
             FullName                 : props.prof.fullName,
@@ -36,7 +37,6 @@ const EditForm = (props) =>{
             Website                  : props.prof.contacts.website
         });
     },[
-        props,
         props.id,
         props.prof.fullName,
         props.prof.aboutme,
