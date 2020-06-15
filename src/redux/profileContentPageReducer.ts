@@ -228,7 +228,7 @@ export const sendProf = (form:any) =>{
             if (resp.data.resultCode === 0)
                 getProfile(form.userId)(dispatch);
             else {
-                let inf = {};
+                let inf:any = {};
                 for (let err of resp.data.messages) {
                     let tmp = err.match(/^(.+)\(.*?(\w+)\)$/);
                     if (tmp !== null)
