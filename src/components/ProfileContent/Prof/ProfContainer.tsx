@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import Prof from "./Prof";
 import {getProfile} from "../../../redux/profileContentPageReducer";
 import {getMyID, getProf} from "../../UTILS/utils";
+import {StateType} from "../../../redux/store";
 
-const mapStateToProps = (state:any,ownProps:any) => {
+const mapStateToProps = (state:StateType,ownProps:any) => {
     const State = getProf(state);
     return {
         text                     : "",

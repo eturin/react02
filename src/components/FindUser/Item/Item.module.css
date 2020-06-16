@@ -43,8 +43,8 @@
 .Block{
     display: grid;
     grid-template-areas:
-            "name country"
-            "cmt city";
+            "name"
+            "cmt";
     grid-template-columns: auto 100px;
     grid-template-rows: 1fr 2fr;
     border-radius: 15px;
@@ -54,16 +54,6 @@
 .Name{
     grid-area: name;
     margin: 5px 5px;
-    font-weight: bold;
-}
-.Country{
-    grid-area: country;
-    margin: 5px 5px 0px 0px;
-    font-weight: bold;
-}
-.City{
-    grid-area: city;
-    margin: 0px 5px 5px 0px;
     font-weight: bold;
 }
 .Comment{

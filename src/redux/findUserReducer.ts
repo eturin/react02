@@ -14,9 +14,9 @@ export type FindUserStateType = {
     count  : number;
     Page: number;
     totalPage: number;
-    mUsers : Array<UserType>;
+    mUsers : Array<FindUserUserType>;
 }
-export type UserType ={
+export type FindUserUserType ={
     page     : number;
     id       : number;
     name     : string;
@@ -92,9 +92,11 @@ export default findUserReducer;
 //action creaters
 export const onFollow       = (id:number,isFollow:boolean):FinfUserFOLLOW                 => ({ type: FOLLOW           , id:id, isFollow:isFollow                                  });
 export const isWatingFollow = (id:number):FinfUserIS_WATING_FOLLOW                        => ({ type: IS_WATING_FOLLOW , id:id                                                     });
-export const addUsers       = (cnt:number, page:number, mUsers: Array<UserType>,totalCount:number):FinfUserADD_USERS      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
+export const addUsers       = (cnt:number, page:number, mUsers: Array<FindUserUserType>,totalCount:number):FinfUserADD_USERS      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
 export const setPage        = (Page:number):FinfUserSET_PAGE                              => ({ type: SET_PAGE         , Page:Page                                                 });
+export type setPageType = typeof setPage;
 export const setCount       = (count:number):FinfUserSET_COUNT                            => ({ type: SET_COUNT        , count:count                                               });
+export type setCountType = typeof setCount;
 
 //thunk creaters
 export const Follow_UnFollow = (isFollow:boolean,id:number) => {
@@ -123,6 +125,8 @@ export const Follow_UnFollow = (isFollow:boolean,id:number) => {
         }
     }
 }
+export type Follow_UnFollowType = typeof Follow_UnFollow;
+
 export const getMore         = (count:number,page:number) => {
     return async (dispatch:any) => {
         try{
@@ -137,3 +141,4 @@ export const getMore         = (count:number,page:number) => {
         }
     }
 }
+export type getMoreType = typeof getMore;

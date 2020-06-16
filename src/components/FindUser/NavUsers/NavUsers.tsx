@@ -2,19 +2,28 @@ import React from "react";
 import css from './NavUsers.module.css'
 import {NavLink} from "react-router-dom";
 import {withRouter} from "react-router";
+import {setCountType, setPageType} from "../../../redux/findUserReducer";
 
-class NavUsers extends React.Component<any,any>{
+type NavUserType = {
+    page: number;
+    setPage: setPageType;
+    setCount:setCountType;
+    countItem: number;
+    totalPage: number;
+} & any
+
+class NavUsers extends React.Component<NavUserType>{
     render() {
         let mJSXButton = [];
         if(Math.max(this.props.page-5,1)!==1)
-            mJSXButton.push(<span key={-1}><NavLink to={`/finduser/${this.props.countItem}/1`}><span className={1===this.props.Page ? css.ActiveSpan:css.Span} key={1} >{1}</span></NavLink><span>...</span></span>);
+            mJSXButton.push(<span key={-1}><NavLink to={`/finduser/${this.props.countItem}/1`}><span className={1===this.props.page ? css.ActiveSpan:css.Span} key={1} >{1}</span></NavLink><span>...</span></span>);
         for(let i=Math.max(this.props.page-5,1);i<=Math.min(this.props.page+5,this.props.totalPage);++i)
             if(i!==this.props.page)
                 mJSXButton.push(<NavLink key={i}  to={`/finduser/${this.props.countItem}/${i}`}><span className={css.Span} >{i}</span></NavLink>);
             else
                 mJSXButton.push(<span key={i}><span>  </span><span className={css.ActiveSpan}>{i}</span><span>  </span></span>);
         if(Math.min(this.props.page+5,this.props.totalPage)!==this.props.totalPage)
-            mJSXButton.push(<span key={-3}><span>...</span><NavLink to={`/finduser/${this.props.countItem}/${this.props.totalPage}`}><span className={this.props.totalPage===this.props.Page ? css.ActiveSpan:css.Span} key={this.props.totalPage}  >{this.props.totalPage}</span></NavLink></span>);
+            mJSXButton.push(<span key={-3}><span>...</span><NavLink to={`/finduser/${this.props.countItem}/${this.props.totalPage}`}><span className={this.props.totalPage===this.props.page ? css.ActiveSpan:css.Span} key={this.props.totalPage}  >{this.props.totalPage}</span></NavLink></span>);
 
         return (
             <div className={css.NavUsers}>

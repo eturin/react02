@@ -5,6 +5,7 @@ import {Redirect} from "react-router";
 import {Field, reduxForm} from "redux-form";
 import {requirdField} from "../UTILS/utils";
 import {Input} from "../UTILS/Control";
+import {LoginType} from "../../redux/authReducer";
 
 const LoginForm =(props:any)=>{
     return (
@@ -47,7 +48,17 @@ const LoginReduxForm = reduxForm<any,any>({
     form: 'login' //уникальное имя формы в state
 })(LoginForm);
 
-const Login = (props:any)=> {
+export type PropsStateType ={
+    isAuth :boolean;
+    id     :number|undefined;
+    url    :string;
+    captcha:string;
+};
+export type PropsDispatchType ={
+    logIn:LoginType;
+};
+
+const Login:React.FC<PropsStateType & PropsDispatchType> = (props)=> {
     if(props.isAuth) {
        return <Redirect to={props.url} />
     }

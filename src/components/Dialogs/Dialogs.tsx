@@ -3,19 +3,19 @@ import {Route} from "react-router";
 import css from './Dialogs.module.css';
 import Item from "./Item/Item";
 import MessagesContainer from "./Messages/MessagesContainer";
-import {DialogItem} from "../../redux/dialogsPageReducer";
+import {DialogItemType} from "../../redux/dialogsPageReducer";
 
-interface IRecipeProps {
+interface PropsStateType {
     id?: number;
     getDialogs: any;
     addToDilogs: any;
-    Dialogs: Array<DialogItem>;
+    Dialogs: Array<DialogItemType>;
     loading: boolean
 }
 
-interface IRecipeState {}
 
-class Dialogs extends React.Component<IRecipeProps,IRecipeState>{
+
+class Dialogs extends React.Component<PropsStateType>{
     componentDidMount() {
         if(this.props.Dialogs.length===0)
             this.props.getDialogs();
@@ -24,7 +24,7 @@ class Dialogs extends React.Component<IRecipeProps,IRecipeState>{
             this.props.addToDilogs(this.props.id);
         }
     }
-    componentDidUpdate(prevProps:IRecipeProps, prevState:any, snapshot:any) {
+    componentDidUpdate(prevProps:PropsStateType, prevState:any, snapshot:any) {
         if(!this.props.loading
           && this.props.Dialogs.length===0) {
             this.props.getDialogs();
@@ -38,7 +38,7 @@ class Dialogs extends React.Component<IRecipeProps,IRecipeState>{
         if(this.props.loading)
             return <p className={css.Loading}><img className={css.ImgBack} alt='wait' src='/loading.gif'/></p>;
          else{
-            let mJSXPeople = this.props.Dialogs.map(x => <Item key={x.id} {...x}/>);
+            let mJSXPeople = this.props.Dialogs.map((x:DialogItemType) => <Item key={x.id} {...x}/>);
 
 
             let mJSXRoute = this.props.Dialogs.map(x => <Route path={`/dialogs/${x.id}`}

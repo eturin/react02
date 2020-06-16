@@ -2,11 +2,23 @@ import React from "react";
 import css from './Item.module.css'
 import {NavLink} from "react-router-dom";
 
-const Item  = (props:any)=>{
+type PropsType = {
+    img?            :string| undefined;
+    id              :number;
+    userName        :string;
+    hasNewMessages? : boolean | undefined;
+    newMessagesCount: number;
+    lastDialogActivityDate?: string | undefined;
+    lastUserActivityDate?  : string | undefined;
+}
+
+const Item  = (props:PropsType)=>{
     return(
         <div className={css.Item} >
             <img className={css.Img} src={props.img} alt={props.img} />
-            <NavLink className={css.A} to={ `/dialogs/${props.id}` } activeClassName={css.ActiveLink}>{props.userName} {props.newMessagesCount>0? `[${props.newMessagesCount}]`:''}</NavLink>
+            <NavLink className={css.A}
+                     to={ `/dialogs/${props.id}` }
+                     activeClassName={css.ActiveLink}>{props.userName} {props.newMessagesCount>0? `[${props.newMessagesCount}]`:''}</NavLink>
         </div>
     );
 }

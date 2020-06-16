@@ -3,8 +3,9 @@ import EditProf from "./EditProf";
 import {getImgMy, getMyID, getProf} from "../../UTILS/utils";
 import {getProfile, sendProf, sendImg} from "../../../redux/profileContentPageReducer";
 import {formValueSelector} from "redux-form";
+import {StateType} from "../../../redux/store";
 
-const mstp = (state:any)=>{
+const mstp = (state:StateType)=>{
     const selector = formValueSelector('editProf');
     return {
         id                 : getMyID(state),

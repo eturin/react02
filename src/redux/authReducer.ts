@@ -20,7 +20,7 @@ export type AuthStateType = {
     cnt: number,
     data: AuthDataType,
     img  : string | undefined,
-    captcha: string | undefined
+    captcha: string
 }
 
 let initState: AuthStateType = {
@@ -32,7 +32,7 @@ let initState: AuthStateType = {
         login: undefined
     },
     img  : undefined,
-    captcha: undefined
+    captcha: ''
 }
 
 const authReducer = (state = initState, action:any):AuthStateType=>{
@@ -138,6 +138,8 @@ export const logIn           = (form:any) => {
         }
     }
 }
+export type LoginType = typeof logIn;
+
 export const logOut          = () =>{
     return async (dispatch:any) => {
         try {
@@ -155,3 +157,4 @@ export const logOut          = () =>{
         }
     }
 }
+export type LogOutType = typeof logOut;

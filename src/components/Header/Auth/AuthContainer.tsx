@@ -1,13 +1,16 @@
 import {connect} from "react-redux";
-import Auth from "./Auth";
-import {logOut} from "../../../redux/authReducer";
+import Auth, {PropsStateType , PropsDispathType} from "./Auth";
+import {logOut, LogOutType} from "../../../redux/authReducer";
 import {getMyID, getMyLogin} from "../../UTILS/utils";
+import {StateType} from "../../../redux/store";
 
-const mstp = (state:any)=>{
+
+const mstp = (state:StateType):PropsStateType=>{
     return {
         id     : getMyID(state),
         login  : getMyLogin(state)
     };
 }
-const AuthContainer = connect(mstp, {logOut})(Auth);
+type OwnPropsType = {}
+const AuthContainer = connect<PropsStateType, PropsDispathType,OwnPropsType,StateType>(mstp, {logOut})(Auth);
 export default AuthContainer;

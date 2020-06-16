@@ -1,15 +1,30 @@
 import React, {Component} from "react";
 import css from './Messages.module.css'
 import Message from "../Message/Message";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {requirdField, maxLength} from "../../UTILS/utils";
 import { Textarea } from "../../UTILS/Control";
 import {NavLink} from "react-router-dom";
-import {DialogMessageType} from "../../../redux/dialogsPageReducer";
+import {DialogMessageType, getMessagesType, sendNewMessageType} from "../../../redux/dialogsPageReducer";
 
 const maxLength100 = maxLength(100);
 
-class Messages extends React.Component<any,any>{
+export type PropsStateType ={
+    id             : number;
+    userName       : string;
+    img            : string;
+    imgMy          : string|undefined;
+    loadingMessages: boolean;
+    Messages       : Array<DialogMessageType>;
+    sending        : boolean
+}
+export type PropsDispatchType ={
+    getMessages   : getMessagesType;
+    sendNewMessage: sendNewMessageType;
+}
+type PropsType = PropsStateType & PropsDispatchType;
+
+class Messages extends React.Component<PropsType>{
     componentDidMount() {
         if(this.props.Messages.length ===0 )
             this.props.getMessages(this.props.id)
@@ -44,8 +59,8 @@ class Messages extends React.Component<any,any>{
                     <span className={css.Person}><NavLink to={`/profile/${this.props.id}`}>{this.props.userName}</NavLink></span>
                     {mJSXMessages}
                     <NewReduxForm onSubmit={this.props.sendNewMessage}
-                                  idDilog={this.props.id}
-                                  sending={this.props.sending}/>
+                                  idDilog ={this.props.id}
+                                  sending ={this.props.sending}/>
 
                 </div>
             );
@@ -53,7 +68,12 @@ class Messages extends React.Component<any,any>{
     };
 }
 
-class New extends Component<any,any> {
+type PST = {
+    idDilog     : number;
+    sending     : boolean;
+}
+
+class New extends Component<PST & InjectedFormProps<{ idDilog:number;},PST,string>> {
     componentDidMount() {
         this.props.initialize({ idDilog: this.props.idDilog });
     }
@@ -76,7 +96,7 @@ class New extends Component<any,any> {
         );
     }
 }
-const NewReduxForm = reduxForm<any,{idDilog:string, sending:any}>({
+const NewReduxForm = reduxForm<{idDilog     : number;},PST,string>({
     form: 'NewMessage' //уникальное имя формы в state
 })(New);
 

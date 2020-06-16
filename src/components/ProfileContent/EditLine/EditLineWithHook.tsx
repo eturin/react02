@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 //import css from './EditLine.module.css'
 
-const EditLineWithHook = (props) =>{
+const EditLineWithHook = (props:any) =>{
     const [isEdit,setEdit] = useState(false);
     const [text  ,setText] = useState(props.text);
 
@@ -13,8 +13,8 @@ const EditLineWithHook = (props) =>{
         if(isEdit) props.stopEditLine(props.id,props.source,text);
         setEdit(!isEdit)
     }
-    const updateText = (e) => { setText(e.target.value); };
-    const onKeyDown  = (e) => {
+    const updateText = (e:any) => { setText(e.target.value); };
+    const onKeyDown  = (e:any) => {
         if(e.key==='Enter'){
             if(text!==props.text) {
                 props.stopEditLine(props.id, props.source, text);

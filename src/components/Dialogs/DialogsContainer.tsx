@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import {addToDilogs, getDialogs, setLoadingDialogs} from "../../redux/dialogsPageReducer";
 import {getLoadingDialogs, getStateDialogs} from "../UTILS/utils";
 import {withRouter} from "react-router";
+import {StateType} from "../../redux/store";
 
-const mapStateToProps = (state:any, props:any) =>{
+const mapStateToProps = (state:StateType, props:any) =>{
     let id = props.match.params.id;
     return {
         id     : parseInt(id),

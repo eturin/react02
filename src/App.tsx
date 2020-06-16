@@ -46,7 +46,7 @@ class App extends React.Component<IRecipeProps,IRecipeState> {
   }
 
   render(){
-    if(!this.props.inited) return <Loading />;
+    if(!this.props.inited) return <Redirect to='/login' /> ;
 
     return (
         <div className={css.App}>
@@ -70,7 +70,10 @@ class App extends React.Component<IRecipeProps,IRecipeState> {
   }
 }
 
-const mstp = (state: any) =>{
+export interface AppPropsType {
+  inited: boolean
+}
+const mstp = (state: any):AppPropsType =>{
   return {
     inited: getInitedApp(state)
   };

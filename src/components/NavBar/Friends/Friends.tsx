@@ -1,9 +1,13 @@
 import React from "react";
 import css from './Friends.module.css'
 import Friend from "../Friend/Friend";
+import {FriendType} from "../../../redux/navBarReducer";
 
-const Friends = (props:any) =>{
-    let mJSXFriends = props.mFriends.map((x:any) => <Friend img={x.img} key={x.id} id={x.id} name={x.name}/>);
+export type PropsStateType = {
+    mFriends: Array<FriendType>;
+}
+const Friends:React.FC<PropsStateType> = (props) =>{
+    let mJSXFriends = props.mFriends.map((x:FriendType) => <Friend img={x.img} key={x.id}  name={x.name}/>);
 
     return (
         <div className={css.Friends}>

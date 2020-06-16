@@ -1,5 +1,6 @@
 import Axios from "axios";
 import {createSelector} from "reselect";
+import {StateType} from "../../redux/store";
 
 export const aXiOs = Axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -14,26 +15,26 @@ export const maxLength = (cnt:number) =>{
 }
 
 //selectors
-export const getSending        =(state:any)       => state.DialogsPage.sending;
-export const getLoadingDialogs =(state:any)       => state.DialogsPage.loading;
-export const getImgMy          =(state:any)       => state.Auth.img;
-export const getLoadingMessages=(state:any)       => state.DialogsPage.loadingMessages;
-export const getPage           =(state:any)       => state.FindUserPage.Page;
-export const getTotalPage      =(state:any)       => state.FindUserPage.totalPage;
-export const getCountItem      =(state:any)       => state.FindUserPage.count;
-export const getMyID           =(state:any)       => state.Auth.data.id;
-export const getMyLogin        =(state:any)       => state.Auth.data.login;
-export const getCaptcha        =(state:any)       => state.Auth.captcha;
-export const getUrlToBack      =(state:any)       => state.App.url_to_go_back_after_redirect;
-export const getFriends        =(state:any)       => state.NavBar.FriendsPage.mFriends;
-export const getInitedApp      =(state:any)       => state.App.isInitApp;
-export const getIDforDilog     =(state:any)       => state.ProfileContentPage.id;
-export const getValueForDilog  =(state:any,source:string)=> state.ProfileContentPage[source];
-export const getProf           =(state:any)       => state.ProfileContentPage;
+export const getSending        =(state:StateType)       => state.DialogsPage.sending;
+export const getLoadingDialogs =(state:StateType)       => state.DialogsPage.loading;
+export const getImgMy          =(state:StateType)       => state.Auth.img;
+export const getLoadingMessages=(state:StateType)       => state.DialogsPage.loadingMessages;
+export const getPage           =(state:StateType)       => state.FindUserPage.Page;
+export const getTotalPage      =(state:StateType)       => state.FindUserPage.totalPage;
+export const getCountItem      =(state:StateType)       => state.FindUserPage.count;
+export const getMyID           =(state:StateType)       => state.Auth.data.id;
+export const getMyLogin        =(state:StateType)       => state.Auth.data.login;
+export const getCaptcha        =(state:StateType)       => state.Auth.captcha;
+export const getUrlToBack      =(state:StateType)       => state.App.url_to_go_back_after_redirect;
+export const getFriends        =(state:StateType)       => state.NavBar.FriendsPage.mFriends;
+export const getInitedApp      =(state:StateType)       => state.App.isInitApp;
+export const getIDforDilog     =(state:StateType)       => state.ProfileContentPage.id;
+export const getValueForDilog  =(state:StateType,source:string)=> state.ProfileContentPage[source];
+export const getProf           =(state:StateType)       => state.ProfileContentPage;
 
 //reselectors
-const _passVal           =(state:any,val:any)=> val;
-const _getStateDialogs   =(state:any)    => state.DialogsPage.Dialogs;
+const _passVal           =(state:StateType,val:any)=> val;
+const _getStateDialogs   =(state:StateType)    => state.DialogsPage.Dialogs;
 export const getImg = createSelector(
     [_getStateDialogs,_passVal],
     (Dialogs:any, id:number)=> {
@@ -53,7 +54,7 @@ export const getStateDialogs   = createSelector(
             }
 )
 
-const _getStateMessages        =(state:any)    => ({id: state.DialogsPage.id, Messages: state.DialogsPage.Messages});
+const _getStateMessages        =(state:StateType)    => ({id: state.DialogsPage.id, Messages: state.DialogsPage.Messages});
 export const getStateMessages = createSelector(
     [_getStateMessages, _passVal],
     (obj:any, id:number) => {
@@ -61,7 +62,7 @@ export const getStateMessages = createSelector(
             }
 )
 
-export const getUsers          =(state:any)       => state.FindUserPage.mUsers;
+export const getUsers          =(state:StateType)       => state.FindUserPage.mUsers;
 export const getUserByID       = createSelector(
     [getUsers,_passVal],
     (Users:any,id:number) => {

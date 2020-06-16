@@ -1,8 +1,9 @@
 import {connect} from "react-redux";
 import ProfileContent from "./ProfileContent";
 import {withRouter} from "react-router";
+import {StateType} from "../../redux/store";
 
-const mstp = (state:any, props:any)=>{
+const mstp = (state:StateType, props:any)=>{
     const id=props.match.params.id;
 
     return {
@@ -10,5 +11,5 @@ const mstp = (state:any, props:any)=>{
     };
 }
 
-const ProfileContentContainer = withRouter(connect(mstp,{})(ProfileContent));
+const ProfileContentContainer = withRouter(connect(mstp)(ProfileContent));
 export default ProfileContentContainer;

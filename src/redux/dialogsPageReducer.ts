@@ -30,7 +30,7 @@ export type DialogItemType = {
     hasNewMessages?        : boolean |undefined;
     lastDialogActivityDate?: string|undefined;
     lastUserActivityDate?  : string|undefined;
-    newMessagesCount?      : number|undefined;
+    newMessagesCount       : number;
 }
 export type DialogStateType = {
     loading        : boolean,
@@ -185,6 +185,8 @@ export const getMessages =(id:number) =>{
         }
     }
 }
+export type getMessagesType = typeof getMessages;
+
 export const sendNewMessage = (form:any) =>{
     return async (dispatch:any) =>{
         dispatch(setSending(form.idDilog));
@@ -201,3 +203,4 @@ export const sendNewMessage = (form:any) =>{
         dispatch(setSending(form.idDilog));
     }
 }
+export type sendNewMessageType = typeof sendNewMessage;

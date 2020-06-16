@@ -1,10 +1,10 @@
-import Login from "./Login";
+import Login, {PropsDispatchType, PropsStateType} from "./Login";
 import {connect} from "react-redux";
 import {logIn} from "../../redux/authReducer";
-import {withRouter} from "react-router";
 import {getCaptcha, getMyID, getUrlToBack} from "../UTILS/utils";
+import {StateType} from "../../redux/store";
 
-const mstp=(state:any, props:any) =>{
+const mstp=(state:StateType):PropsStateType =>{
     return {
         isAuth : getMyID(state) !== undefined,
         id     : getMyID(state),
@@ -13,5 +13,5 @@ const mstp=(state:any, props:any) =>{
     }
 }
 
-const LoginContainer = withRouter(connect(mstp,{logIn})(Login))
+const LoginContainer = connect<PropsStateType,PropsDispatchType,void,StateType>(mstp,{logIn})(Login);
 export default LoginContainer;

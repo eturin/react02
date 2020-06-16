@@ -19,11 +19,14 @@ let reducers = combineReducers({
     FindUserPage      : findUserReducer,
     form              : formReducer
 });
+type RootReducerType = typeof reducers;
+export type StateType = ReturnType<RootReducerType>;
 
-
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(ThunkMiddleware)));
 
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(ThunkMiddleware)));
 //let store = createStore(reducers, applyMiddleware(ThunkMiddleware));
+
 
 export default store;

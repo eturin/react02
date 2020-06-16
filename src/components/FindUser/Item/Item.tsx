@@ -1,8 +1,24 @@
 import React from "react";
 import css from './Item.module.css'
 import {NavLink} from "react-router-dom";
+import {FindUserUserType, Follow_UnFollowType} from "../../../redux/findUserReducer";
 
-const Item = (props:any) => {
+export type PropsStateType = {
+    key     : number;
+    id      : number;
+    name    : string;
+    img     : string|null|undefined;
+    comment : string;
+    follow  : boolean;
+    isWating: boolean;
+    x       : FindUserUserType;
+}
+export type PropsDispathType = {
+    Follow_UnFollow:Follow_UnFollowType;
+}
+type PropsType = PropsStateType & PropsDispathType;
+
+const Item:React.FC<PropsType> = (props) => {
     return (
         <div className={css.Item}>
             <div className={css.AvaButton}>
@@ -14,8 +30,6 @@ const Item = (props:any) => {
             </div>
             <div className={css.Block}>
                 <p className={css.Name}>{props.name}</p>
-                <p className={css.Country}>{props.country}</p>
-                <p className={css.City}>{props.city}</p>
                 <p className={css.Comment}>{props.comment}</p>
             </div>
         </div>
