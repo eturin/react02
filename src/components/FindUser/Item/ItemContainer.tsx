@@ -1,9 +1,8 @@
 import {connect} from "react-redux";
 import {FindUserUserType, Follow_UnFollow, Follow_UnFollowType} from "../../../redux/findUserReducer";
-import Item, {PropsStateType} from "./Item";
+import Item, {PropsStateType,PropsDispatchType} from "./Item";
 import {getUserByID} from "../../UTILS/utils";
 import {StateType} from "../../../redux/store";
-import {PropsDispatchType} from "../FindUser";
 
 type OwdPropsType = {
     id      : number;
@@ -12,7 +11,7 @@ type OwdPropsType = {
 const mapStateToProps   = (state:StateType,ownProps: OwdPropsType):PropsStateType =>{
     let x = getUserByID(state,ownProps.id);
     return {
-        key     : x.id,
+        //key     : x.id,
         id      : x.id,
         name    : x.name,
         img     : x.img,
@@ -23,5 +22,8 @@ const mapStateToProps   = (state:StateType,ownProps: OwdPropsType):PropsStateTyp
     }
 }
 
-const ItemContainer = connect<PropsStateType,PropsDispatchType,OwdPropsType,StateType>(mapStateToProps, {Follow_UnFollow})(Item);
+const ItemContainer = connect<PropsStateType,
+                              PropsDispatchType,
+                              OwdPropsType,
+                              StateType>(mapStateToProps, {Follow_UnFollow})(Item);
 export default ItemContainer;

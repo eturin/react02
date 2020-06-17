@@ -127,6 +127,7 @@ export default dialogsPageReducer;
 
 //action creaters
 export const setLoadingDialogs = ():DialogSET_LOADING_DIALOGS                                 => ({type: SET_LOADING_DIALOGS})
+export type setLoadingDialogsType = typeof setLoadingDialogs;
 export const setDialogs        = (data:any):DialogSET_DIALOGS                                 =>({type: SET_DIALOGS, data: data})
 export const setLoadingMessages= (id:number):DialogSET_LOADING_MESSAGES                       =>({type: SET_LOADING_MESSAGES, id:id})
 export const setMessages       = (id:number,data:DialogMessageType):DialogSET_MESSAGES        =>({type: SET_MESSAGES, id: id ,data: data})
@@ -151,6 +152,7 @@ export const addToDilogs =(id:number)=>{
 
     }
 }
+export type addToDilogsType = typeof addToDilogs;
 
 export const getDialogs =()=>{
     return async (dispatch:any) =>{
@@ -167,6 +169,8 @@ export const getDialogs =()=>{
         }
     }
 }
+export type getDialogsType = typeof getDialogs;
+
 export const getMessages =(id:number) =>{
     return async (dispatch:any) => {
         dispatch(setLoadingMessages(id));

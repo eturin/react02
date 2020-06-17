@@ -10,7 +10,7 @@ type PropsType = {
     body    :string;
 }
 
-const Message = (props:PropsType)=>{
+const Message:React.FC<PropsType> = (props)=>{
     return (
         <div className={props.idDilog=== props.senderId ? css.ItemOver : css.ItemMy} >
             <div className={css.Avatar}>

@@ -1,11 +1,11 @@
-import Messages, {PropsDispatchType, PropsStateType} from "./Messages";
-import {connect} from "react-redux";
-import {getMessages,sendNewMessage} from "../../../redux/dialogsPageReducer";
+import Messages, {PropsDispatchType, PropsStateType}                                              from "./Messages";
+import {connect}                                                                                  from "react-redux";
+import {getMessages,sendNewMessage}                                                               from "../../../redux/dialogsPageReducer";
 import {getImg, getImgMy, getLoadingMessages, getSending, getStateMessages, getUserNameForDialog} from "../../UTILS/utils";
-import {StateType} from "../../../redux/store";
+import {StateType}                                                                                from "../../../redux/store";
 
-type OwnPropsType = {
-    userId:number;
+interface OwnPropsType  {
+    userId: number;
 }
 
 const mapStateToProps = (state:StateType, props:OwnPropsType):PropsStateType =>{
@@ -21,5 +21,8 @@ const mapStateToProps = (state:StateType, props:OwnPropsType):PropsStateType =>{
     };
 }
 
-const MessagesContainer = connect<PropsStateType,PropsDispatchType,OwnPropsType,StateType>(mapStateToProps, {getMessages,sendNewMessage})(Messages);
+const MessagesContainer = connect<PropsStateType,
+                                  PropsDispatchType,
+                                  OwnPropsType,
+                                  StateType>(mapStateToProps, {getMessages,sendNewMessage})(Messages);
 export default MessagesContainer;

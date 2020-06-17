@@ -9,27 +9,28 @@ import {DialogMessageType, getMessagesType, sendNewMessageType} from "../../../r
 
 const maxLength100 = maxLength(100);
 
-export type PropsStateType ={
+export interface PropsStateType {
     id             : number;
     userName       : string;
     img            : string;
     imgMy          : string|undefined;
     loadingMessages: boolean;
     Messages       : Array<DialogMessageType>;
-    sending        : boolean
+    sending        : boolean;
 }
-export type PropsDispatchType ={
+export interface PropsDispatchType {
     getMessages   : getMessagesType;
     sendNewMessage: sendNewMessageType;
 }
 type PropsType = PropsStateType & PropsDispatchType;
+interface ST {}
 
-class Messages extends React.Component<PropsType>{
+class Messages extends Component<PropsType,ST >{
     componentDidMount() {
         if(this.props.Messages.length ===0 )
             this.props.getMessages(this.props.id)
     }
-    componentDidUpdate(prevProps:any, prevState:any, snapshot:any) {
+    componentDidUpdate(prevProps:PropsType) {
         if(!this.props.loadingMessages
            && this.props.id!==prevProps.id)
             this.props.getMessages(this.props.id)
@@ -67,15 +68,16 @@ class Messages extends React.Component<PropsType>{
         }
     };
 }
+export default Messages;
 
 type PST = {
     idDilog     : number;
     sending     : boolean;
 }
 
-class New extends Component<PST & InjectedFormProps<{ idDilog:number;},PST,string>> {
+class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,string>> {
     componentDidMount() {
-        this.props.initialize({ idDilog: this.props.idDilog });
+        this.props.initialize({ idDilog:this.props.idDilog });
     }
 
     render (){
@@ -96,8 +98,8 @@ class New extends Component<PST & InjectedFormProps<{ idDilog:number;},PST,strin
         );
     }
 }
-const NewReduxForm = reduxForm<{idDilog     : number;},PST,string>({
+const NewReduxForm = reduxForm<{idDilog: number},PST,string>({
     form: 'NewMessage' //уникальное имя формы в state
 })(New);
 
-export  default Messages;
+

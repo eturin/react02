@@ -12,7 +12,7 @@ type PropsType = {
     lastUserActivityDate?  : string | undefined;
 }
 
-const Item  = (props:PropsType)=>{
+const Item:React.FC<PropsType> = (props)=>{
     return(
         <div className={css.Item} >
             <img className={css.Img} src={props.img} alt={props.img} />

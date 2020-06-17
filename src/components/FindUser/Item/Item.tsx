@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {FindUserUserType, Follow_UnFollowType} from "../../../redux/findUserReducer";
 
 export type PropsStateType = {
-    key     : number;
+    //key     : number;
     id      : number;
     name    : string;
     img     : string|null|undefined;
@@ -13,10 +13,10 @@ export type PropsStateType = {
     isWating: boolean;
     x       : FindUserUserType;
 }
-export type PropsDispathType = {
-    Follow_UnFollow:Follow_UnFollowType;
+export type PropsDispatchType = {
+    Follow_UnFollow: Follow_UnFollowType;
 }
-type PropsType = PropsStateType & PropsDispathType;
+type PropsType = PropsStateType & PropsDispatchType;
 
 const Item:React.FC<PropsType> = (props) => {
     return (

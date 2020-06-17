@@ -1,9 +1,10 @@
-import {connect} from "react-redux";
-import FindUser, {PropsDispatchType, PropsStateType} from "./FindUser";
-import {getMore, setCount, setPage} from "../../redux/findUserReducer";
+import {connect}                                       from "react-redux";
+import {compose}                                       from "redux";
+import FindUser, {PropsDispatchType, PropsStateType}   from "./FindUser";
+import {getMore, setCount, setPage}                    from "../../redux/findUserReducer";
 import {getCountItem, getPage, getTotalPage, getUsers} from "../UTILS/utils";
-import {RouteComponentProps, withRouter} from "react-router";
-import {StateType} from "../../redux/store";
+import {RouteComponentProps, withRouter}               from "react-router";
+import {StateType}                                     from "../../redux/store";
 
 type OwnPropsType = RouteComponentProps<{cnt:string, id:string;}>;
 
@@ -28,8 +29,11 @@ const mapStateToProps   = (state:StateType, ownProps:OwnPropsType):PropsStateTyp
     }
 }
 
-const FindUserContainer = withRouter(connect<PropsStateType,
-                                             PropsDispatchType,
-                                             OwnPropsType,
-                                             StateType>(mapStateToProps, {setPage,setCount,getMore})(FindUser));
+const FindUserContainer = compose(
+    withRouter,
+    connect<PropsStateType,
+            PropsDispatchType,
+            OwnPropsType,
+            StateType>(mapStateToProps, {setPage,setCount,getMore})
+)(FindUser);
 export default FindUserContainer;

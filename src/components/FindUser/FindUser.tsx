@@ -22,15 +22,15 @@ export type PropsDispatchType = {
     getMore     : getMoreType;
 }
 type PropsType = PropsStateType & PropsDispatchType;
-
-class FindUser extends React.Component<PropsType> {
+type ST = {}
+class FindUser extends React.Component<PropsType,ST> {
     /*constructor(props) {//нельзя заменить на стрелочную функцию
         super(props);
     };*/
     componentDidMount = () => {
         this.props.getMore(this.props.countItem,this.props.Page);
     }
-    componentDidUpdate(prevProps:PropsType, prevState:any, snapshot:any) {
+    componentDidUpdate(prevProps:PropsType) {
         if(prevProps.Page!==this.props.Page || prevProps.countItem!==this.props.countItem)
             this.props.getMore(this.props.countItem,this.props.Page);
     }

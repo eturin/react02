@@ -48,4 +48,5 @@ export const initApp = ()=>{
                });
     }
 }
+export type initAppType = typeof initApp;
 export default appReducer;

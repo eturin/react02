@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {compose} from "redux";
-import {Redirect, Route, Switch, withRouter} from "react-router"
+import {Redirect, Route, RouteComponentProps, Switch, withRouter} from "react-router"
 import css from './App.module.css'
 
 import Header from "./components/Header/Header";
@@ -12,10 +11,10 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import ProfileContentContainer from "./components/ProfileContent/ProfileContentContainer";
 import withLoginRedirect from "./components/HOC/withLoginRedirect";
-import {initApp} from "./redux/appReducer";
-import Loading from "./components/Loading/Loading";
+import {initApp, initAppType} from "./redux/appReducer";
 import {getInitedApp} from "./components/UTILS/utils";
 import withSuspense from "./components/HOC/withSuspense";
+import {StateType} from "./redux/store";
 
 //ленивая загрузка
 const News             =React.lazy(() => import("./components/News/News"));
@@ -33,7 +32,7 @@ interface IRecipeProps {
 
 interface IRecipeState {}
 
-class App extends React.Component<IRecipeProps,IRecipeState> {
+class App extends React.Component<IRecipeProps, IRecipeState> {
   error = (promiseRejectionEvent:any) =>{
     alert(promiseRejectionEvent);
   }
@@ -70,17 +69,16 @@ class App extends React.Component<IRecipeProps,IRecipeState> {
   }
 }
 
-export interface AppPropsType {
+export interface PropsStateType {
   inited: boolean
 }
-const mstp = (state: any):AppPropsType =>{
+export interface PropsDispatchType {
+  initApp: initAppType
+}
+const mstp = (state: StateType):PropsStateType =>{
   return {
     inited: getInitedApp(state)
   };
 };
-
-export default compose(
-    withRouter,
-    connect(mstp, {initApp})
-)(App);
+export default connect<PropsStateType,PropsDispatchType,void,StateType>(mstp, {initApp})(App);
 

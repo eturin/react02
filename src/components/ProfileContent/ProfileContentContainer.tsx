@@ -11,5 +11,5 @@ const mstp = (state:StateType, props:any)=>{
     };
 }
 
-const ProfileContentContainer = withRouter(connect(mstp)(ProfileContent));
+const ProfileContentContainer = withRouter(connect<any,any,any,StateType>(mstp)(ProfileContent));
 export default ProfileContentContainer;
