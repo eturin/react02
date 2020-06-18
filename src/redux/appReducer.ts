@@ -1,9 +1,12 @@
-import {authMe} from "./authReducer";
+import {AnyActionType, authMe} from "./authReducer";
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./store";
 
 const INITED_APP = 'app/InitedAPP';
 const SET_URL    = 'app/SetUrl';
 type AppActionINITED_APP ={type: typeof INITED_APP; }
 type AppActionSET_URL    ={type: typeof SET_URL; url:string }
+type AnyActionType = AppActionINITED_APP | AppActionSET_URL;
 
 export type AppStateType ={
     isInitApp:  boolean;
@@ -41,8 +44,8 @@ export const setUrl = (url:string):AppActionSET_URL   => ({type: SET_URL, url:ur
 export type setUrlType = typeof setUrl;
 
 //thunk creaters
-export const initApp = ()=>{
-    return (dispath:any)=>{
+export const initApp = ():ThunkAction<void, StateType, void, AnyActionType>=>{
+    return (dispath)=>{
         Promise.all([authMe()(dispath)])
                .then(()=>{
                     dispath(inited());

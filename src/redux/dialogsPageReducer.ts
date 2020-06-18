@@ -1,4 +1,7 @@
 import {aXiOs} from "../components/UTILS/utils";
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./store";
+
 
 const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
 const SET_DIALOGS         = 'dialogPage/SetDialogs';
@@ -12,6 +15,7 @@ export type DialogSET_LOADING_MESSAGES= {type: typeof SET_LOADING_MESSAGES; id:n
 export type DialogSET_MESSAGES        = {type: typeof SET_MESSAGES; id:number; data:DialogMessageType};
 export type DialogSET_SENDING         = {type: typeof SET_SENDING; idDilog:number};
 export type DialogADD_TO_DILOGS       = {type: typeof ADD_TO_DILOGS;id:number; img:string; userName:string};
+type AnyActionType = DialogSET_LOADING_DIALOGS | DialogSET_DIALOGS | DialogSET_LOADING_MESSAGES | DialogSET_MESSAGES | DialogSET_SENDING | DialogADD_TO_DILOGS;
 
 export type DialogMessageType = {
     id            : string; //"45612b96-7686-4f1b-a75f-f59871dc38cb"
@@ -30,7 +34,7 @@ export type DialogItemType = {
     hasNewMessages?        : boolean |undefined;
     lastDialogActivityDate?: string|undefined;
     lastUserActivityDate?  : string|undefined;
-    newMessagesCount       : number;
+    newMessagesCount?      : number;
 }
 export type DialogStateType = {
     loading        : boolean,
@@ -135,8 +139,8 @@ export const setSending        = (idDilog:number):DialogSET_SENDING             
 export const addToMyDilogs     = (id:number, img:string, userName:string):DialogADD_TO_DILOGS => ({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
 
 //thunk creaters
-export const addToDilogs =(id:number)=>{
-    return async (dispatch:any) => {
+export const addToDilogs =(id:number):ThunkAction<void, StateType, void , AnyActionType>=>{
+    return async (dispatch) => {
         try{
             let resp = await aXiOs.get(`profile/${id}`)
             dispatch(addToMyDilogs(id,
@@ -154,8 +158,8 @@ export const addToDilogs =(id:number)=>{
 }
 export type addToDilogsType = typeof addToDilogs;
 
-export const getDialogs =()=>{
-    return async (dispatch:any) =>{
+export const getDialogs =():ThunkAction<void, StateType, void , AnyActionType>=>{
+    return async (dispatch) =>{
         dispatch(setLoadingDialogs());
         try {
             let resp = await aXiOs.get(`dialogs`);
@@ -171,8 +175,8 @@ export const getDialogs =()=>{
 }
 export type getDialogsType = typeof getDialogs;
 
-export const getMessages =(id:number) =>{
-    return async (dispatch:any) => {
+export const getMessages =(id:number):ThunkAction<void, StateType, void , AnyActionType> =>{
+    return async (dispatch) => {
         dispatch(setLoadingMessages(id));
         try{
             let resp = await aXiOs.get(`dialogs/${id}/messages`);
@@ -191,8 +195,8 @@ export const getMessages =(id:number) =>{
 }
 export type getMessagesType = typeof getMessages;
 
-export const sendNewMessage = (form:any) =>{
-    return async (dispatch:any) =>{
+export const sendNewMessage = (form:any):ThunkAction<void, StateType, void, AnyActionType> =>{
+    return async (dispatch) =>{
         dispatch(setSending(form.idDilog));
         try{
             await aXiOs.post(`dialogs/${form.idDilog}/messages`,{body:form.body});
