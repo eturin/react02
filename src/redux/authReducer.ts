@@ -1,5 +1,7 @@
 import {aXiOs} from '../components/UTILS/utils'
 import {stopSubmit} from 'redux-form'
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./store";
 
 const SET_ME           ='auth/SetMe';
 const SET_LOADING_ME   ='auth/SetLoadingMe';
@@ -9,6 +11,7 @@ export type AuthSET_ME         = { type: typeof SET_ME;         data:AuthDataTyp
 export type AuthSET_LOADING_ME = { type: typeof SET_LOADING_ME;                  };
 export type AuthSET_CAPTCHA    = { type: typeof SET_CAPTCHA;    url:string       };
 export type AuthSET_IMG        = { type: typeof SET_IMG;        id:number,img:string};
+export type AnyActionType = AuthSET_ME | AuthSET_LOADING_ME | AuthSET_CAPTCHA | AuthSET_IMG;
 
 export type AuthDataType = {
     id   : number | undefined,
@@ -81,8 +84,8 @@ export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SE
 export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
-export const authMe          = () => {
-    return async (dispatch:any) => {
+export const authMe          = ():ThunkAction<void, StateType, void, AnyActionType> => {
+    return async (dispatch) => {
         dispatch(setLoadingMe());
         try {
             let resp = await aXiOs.get(`auth/me`);
@@ -101,8 +104,8 @@ export const authMe          = () => {
         }
     }
 }
-
-export const logIn           = (form:any) => {
+export type authMeType = typeof authMe;
+export const logIn           = (form:any):ThunkAction<void, StateType, void, AnyActionType> => {
     return async (dispatch:any) => {
         try {
             let resp = await aXiOs.post(`auth/login`, {
@@ -140,8 +143,8 @@ export const logIn           = (form:any) => {
 }
 export type LoginType = typeof logIn;
 
-export const logOut          = () =>{
-    return async (dispatch:any) => {
+export const logOut          = ():ThunkAction<void, StateType, void, AnyActionType> =>{
+    return async (dispatch) => {
         try {
             let resp = await aXiOs.post(`auth/logout`);
             if (resp.data.resultCode === 0)

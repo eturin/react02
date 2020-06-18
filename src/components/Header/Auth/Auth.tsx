@@ -4,35 +4,33 @@ import {NavLink} from "react-router-dom";
 import {LogOutType} from "../../../redux/authReducer";
 
 export type PropsStateType ={
-    id: number|undefined;
-    login:string|undefined;
+    id   : number|undefined;
+    login: string|undefined;
 }
 export type PropsDispathType = {
     logOut: LogOutType
 }
 type PropsType = PropsStateType & PropsDispathType
 
-class Auth extends React.Component<PropsType>{
-    render() {
-        let mJSX=[];
+const Auth:React.FC<PropsType> = (props) =>{
+    let mJSX=[];
 
-        if(this.props.login === undefined)
-            mJSX.push(<NavLink key={0} className={ css.Link } to='/login'>Login</NavLink>);
-        else {
-            mJSX.push(<div key={-1}>
-                        <NavLink key={this.props.id} className={css.Link}
-                               to={`/profile/${this.props.id}`}>{this.props.login}</NavLink>
-                        <span key={1} onClick={this.props.logOut}> Выйти</span>
-                      </div>
-                );
-        }
-
-        return (
-            <div className={ css.Auth }>
-                { mJSX }
+    if(props.login === undefined)
+        mJSX.push(<NavLink key={0} className={ css.Link } to='/login'>Login</NavLink>);
+    else {
+        mJSX.push(<div key={-1}>
+                <NavLink key={props.id} className={css.Link}
+                         to={`/profile/${props.id}`}>{props.login}</NavLink>
+                <span key={1} onClick={props.logOut}> Выйти</span>
             </div>
         );
     }
+
+    return (
+        <div className={css.Auth}>
+            {mJSX}
+        </div>
+    );
 }
 
 export default Auth;

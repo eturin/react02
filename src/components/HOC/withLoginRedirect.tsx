@@ -1,13 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Redirect} from "react-router";
-import {setUrl} from "../../redux/appReducer";
+import {setUrl, setUrlType} from "../../redux/appReducer";
 import {getMyID} from "../UTILS/utils";
 import {StateType} from "../../redux/store";
 
-
-const mstp = (state:StateType)=>({isAuth: getMyID(state)!==undefined})
-
+type PropsStateType = {
+    isAuth: boolean
+}
+const mstp = (state:StateType):PropsStateType=>({isAuth: getMyID(state)!==undefined})
+type PropsDispatchType = {
+    setUrl: setUrlType
+}
 const withLoginRedirect = (Component:any) => {
     class WithRedirect extends React.Component<any,any> {
         render() {
@@ -20,7 +24,7 @@ const withLoginRedirect = (Component:any) => {
         }
     }
 
-    return connect(mstp,{setUrl})(WithRedirect);
+    return connect<PropsStateType,PropsDispatchType,void,StateType>(mstp,{setUrl})(WithRedirect);
 }
 
 export default withLoginRedirect;

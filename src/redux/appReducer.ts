@@ -38,6 +38,7 @@ const appReducer = (state = initState, action:any):AppStateType =>{
 //action creaters
 export const inited = ():AppActionINITED_APP          => ({type: INITED_APP});
 export const setUrl = (url:string):AppActionSET_URL   => ({type: SET_URL, url:url});
+export type setUrlType = typeof setUrl;
 
 //thunk creaters
 export const initApp = ()=>{
