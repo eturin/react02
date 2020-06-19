@@ -13,7 +13,7 @@ const ADD_TO_DILOGS       = 'dialogPage/AddToDilogs';
 export type DialogSET_LOADING_DIALOGS = {type: typeof SET_LOADING_DIALOGS};
 export type DialogSET_DIALOGS         = {type: typeof SET_DIALOGS;data:any};
 export type DialogSET_LOADING_MESSAGES= {type: typeof SET_LOADING_MESSAGES; id:number};
-export type DialogSET_MESSAGES        = {type: typeof SET_MESSAGES; id:number; data:DialogMessageType};
+export type DialogSET_MESSAGES        = {type: typeof SET_MESSAGES; id:number; data:Array<DialogMessageType>};
 export type DialogSET_SENDING         = {type: typeof SET_SENDING; idDilog:number};
 export type DialogADD_TO_DILOGS       = {type: typeof ADD_TO_DILOGS;id:number; img:string; userName:string};
 type AnyActionType = DialogSET_LOADING_DIALOGS | DialogSET_DIALOGS | DialogSET_LOADING_MESSAGES | DialogSET_MESSAGES | DialogSET_SENDING | DialogADD_TO_DILOGS;
@@ -135,9 +135,9 @@ export const setLoadingDialogs = ():DialogSET_LOADING_DIALOGS                   
 export type setLoadingDialogsType = typeof setLoadingDialogs;
 export const setDialogs        = (data:any):DialogSET_DIALOGS                                 =>({type: SET_DIALOGS, data: data})
 export const setLoadingMessages= (id:number):DialogSET_LOADING_MESSAGES                       =>({type: SET_LOADING_MESSAGES, id:id})
-export const setMessages       = (id:number,data:DialogMessageType):DialogSET_MESSAGES        =>({type: SET_MESSAGES, id: id ,data: data})
+export const setMessages       = (id:number,data:Array<DialogMessageType>):DialogSET_MESSAGES =>({type: SET_MESSAGES, id: id ,data: data})
 export const setSending        = (idDilog:number):DialogSET_SENDING                           =>({type: SET_SENDING, idDilog:idDilog})
-export const addToMyDilogs     = (id:number, img:string, userName:string):DialogADD_TO_DILOGS => ({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
+export const addToMyDilogs     = (id:number, img:string, userName:string):DialogADD_TO_DILOGS =>({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
 
 
 //thunk creaters
