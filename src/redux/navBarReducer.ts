@@ -1,3 +1,5 @@
+import {StateType} from "./store";
+
 export type FriendType = {
     img: string;
     name: string;
@@ -18,11 +20,11 @@ let initState:NavBarStateType = {
     }
 };
 
-const navBarReducer = (state=initState, action:any):NavBarStateType => {
+const navBarReducer = (state=initState):NavBarStateType => {
     let stateCopy = state;
     return stateCopy;
 }
 
-export const getFriends = (state:any):Array<FriendType> => state.FriendsPage.mFriends;
+export const getFriends = (state:StateType):Array<FriendType> => state.NavBar.FriendsPage.mFriends;
 
 export  default navBarReducer;

@@ -1,7 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, KeyboardEvent, ChangeEvent} from "react";
+import {stopEditLineType} from "../../../redux/profileContentPageReducer";
 //import css from './EditLine.module.css'
+export type PropsStateType = {
+    text  : string;
+    source: string;
+    id?   : number;
+}
+export type PropsDispatchType = {
+    stopEditLine: stopEditLineType;
+}
+type PropsType = PropsStateType &  PropsDispatchType;
 
-const EditLineWithHook = (props:any) =>{
+const EditLineWithHook:React.FC<PropsType> = (props) =>{
     const [isEdit,setEdit] = useState(false);
     const [text  ,setText] = useState(props.text);
 
@@ -10,13 +20,13 @@ const EditLineWithHook = (props:any) =>{
     } , [props.text])
 
     const changeEdit = () =>{
-        if(isEdit) props.stopEditLine(props.id,props.source,text);
+        if(isEdit && props.id) props.stopEditLine(props.id,props.source,text);
         setEdit(!isEdit)
     }
-    const updateText = (e:any) => { setText(e.target.value); };
-    const onKeyDown  = (e:any) => {
+    const updateText = (e:ChangeEvent<HTMLInputElement>) => { setText(e.target.value); };
+    const onKeyDown  = (e:KeyboardEvent<HTMLInputElement>):void => {
         if(e.key==='Enter'){
-            if(text!==props.text) {
+            if(text!==props.text && props.id) {
                 props.stopEditLine(props.id, props.source, text);
             }
             setEdit(false);

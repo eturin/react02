@@ -3,22 +3,51 @@ import css from './Prof.module.css';
 import EditLineContainer from "../EditLine/EditLineContainer";
 import Loading from "../../Loading/Loading";
 import {NavLink} from "react-router-dom";
+import { getProfileType } from "../../../redux/profileContentPageReducer";
+import {RouteComponentProps} from "react-router";
 
+export type PropsStateType = {
+    text                     : string,
+    loading                  : boolean,
+    aboutme                  : string,
+    lookingForAJob           : boolean,
+    lookingForAJobDescription: string
+    fullName                 : string,
+    github                   : string,
+    vk                       : string,
+    facebook                 : string,
+    instagram                : string,
+    twitter                  : string,
+    website                  : string,
+    youtube                  : string,
+    mainLink                 : string,
+    large                    : string,
+    id                       : number,
+    myID?                    : number
+} & RouteComponentProps<{id:string;}>
+export type PropsDispatchType = {
+    getProfile: getProfileType;
+}
+type PropsType = PropsStateType & PropsDispatchType;
+type ST = {}
 
-class Prof extends React.Component<any,any> {
+class Prof extends React.Component<PropsType,ST> {
     componentDidMount() {
-        let id=this.props.match.params.id;
-        this.props.getProfile(id!==undefined ? id: this.props.myID);
+        let id:number|undefined  = this.props.match.params.id? parseInt(this.props.match.params.id) : this.props.myID;
+        this.props.getProfile(id);
 
     }
-    componentDidUpdate(prevProps:any, prevState:any, snapshot:any) {
-        let id=this.props.match.params.id;
-        if(id===undefined)
-            id= this.props.myID;
+    componentDidUpdate(prevProps:PropsType, prevState:ST) {
+        let id: number|undefined=this.props.match.params.id ?  parseInt(this.props.match.params.id) : undefined;
+        if(id) id = this.props.myID;
+        let idFromURL: number |undefined = prevProps.match.params.id? parseInt(prevProps.match.params.id): undefined;
+
         if(prevProps!=null
-           && prevProps.match.params.id!==undefined
-           && id!==prevProps.match.params.id)
+           && idFromURL !==undefined
+           && id !== idFromURL) {
+            id = idFromURL;
             this.props.getProfile(id);
+        }
     }
 
     render() {

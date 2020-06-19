@@ -1,4 +1,4 @@
-import {AnyActionType, authMe} from "./authReducer";
+import {authMe} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
 import {StateType} from "./store";
 
@@ -9,15 +9,15 @@ type AppActionSET_URL    ={type: typeof SET_URL; url:string }
 type AnyActionType = AppActionINITED_APP | AppActionSET_URL;
 
 export type AppStateType ={
-    isInitApp:  boolean;
+    isInitApp                    :  boolean;
     url_to_go_back_after_redirect: string;
 }
 let initState: AppStateType = {
-    isInitApp: false,
+    isInitApp                    : false,
     url_to_go_back_after_redirect: '/'
 }
 
-const appReducer = (state = initState, action:any):AppStateType =>{
+const appReducer = (state = initState, action:AnyActionType):AppStateType =>{
     let copyState = state;
     switch(action.type){
         case INITED_APP:

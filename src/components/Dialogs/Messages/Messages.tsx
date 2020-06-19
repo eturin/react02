@@ -13,7 +13,7 @@ export interface PropsStateType {
     id             : number;
     userName       : string;
     img            : string;
-    imgMy          : string|undefined;
+    imgMy?         : string;
     loadingMessages: boolean;
     Messages       : Array<DialogMessageType>;
     sending        : boolean;
@@ -23,7 +23,7 @@ export interface PropsDispatchType {
     sendNewMessage: sendNewMessageType;
 }
 type PropsType = PropsStateType & PropsDispatchType;
-interface ST {}
+type ST = {};
 
 class Messages extends Component<PropsType,ST >{
     componentDidMount() {
@@ -47,12 +47,13 @@ class Messages extends Component<PropsType,ST >{
                 </>
             );
         else {
-            let mJSXMessages = this.props.Messages.map((x:DialogMessageType) => <Message key={x.id}
-                                                                     {...x}
-                                                                     img={this.props.img}
-                                                                     imgMy={this.props.imgMy}
-                                                                     idDilog={this.props.id}
-            />);
+            let mJSXMessages = this.props.Messages.map((x:DialogMessageType) => <Message key    ={x.id}
+                                                                                         {...x}
+                                                                                         img    ={this.props.img  }
+                                                                                         imgMy  ={this.props.imgMy}
+                                                                                         idDilog={this.props.id   }
+                                                                                />
+            );
 
             return (
                 <div className={css.Messages}>

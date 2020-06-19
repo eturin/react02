@@ -1,6 +1,7 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {ThunkAction} from "redux-thunk";
 import {StateType} from "./store";
+import {FinfUserADD_USERS} from "./findUserReducer";
 
 
 const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
@@ -28,13 +29,13 @@ export type DialogMessageType = {
     viewed        : boolean
 }
 export type DialogItemType = {
-    id                     : number;
-    img?                   : string;
-    userName               : string;
-    hasNewMessages?        : boolean |undefined;
-    lastDialogActivityDate?: string|undefined;
-    lastUserActivityDate?  : string|undefined;
-    newMessagesCount?      : number;
+    id                     : number ;
+    img?                   : string ;
+    userName               : string ;
+    hasNewMessages?        : boolean;
+    lastDialogActivityDate?: string ;
+    lastUserActivityDate?  : string ;
+    newMessagesCount?      : number ;
 }
 export type DialogStateType = {
     loading        : boolean,
@@ -42,7 +43,7 @@ export type DialogStateType = {
     loadingMessages: boolean,
     Messages       : Array<DialogMessageType>,
     sending        : boolean,
-    id             : number | undefined
+    id?            : number
 }
 let initState:DialogStateType =  {
     loading: false,
@@ -53,7 +54,7 @@ let initState:DialogStateType =  {
     id: undefined
 };
 
-const dialogsPageReducer = (state = initState, action:any):DialogStateType =>{
+const dialogsPageReducer = (state = initState, action:AnyActionType):DialogStateType =>{
     let stateCopy =state;
     switch (action.type) {
         case SET_LOADING_DIALOGS:
@@ -137,6 +138,7 @@ export const setLoadingMessages= (id:number):DialogSET_LOADING_MESSAGES         
 export const setMessages       = (id:number,data:DialogMessageType):DialogSET_MESSAGES        =>({type: SET_MESSAGES, id: id ,data: data})
 export const setSending        = (idDilog:number):DialogSET_SENDING                           =>({type: SET_SENDING, idDilog:idDilog})
 export const addToMyDilogs     = (id:number, img:string, userName:string):DialogADD_TO_DILOGS => ({type: ADD_TO_DILOGS, id:id, img:img, userName:userName});
+
 
 //thunk creaters
 export const addToDilogs =(id:number):ThunkAction<void, StateType, void , AnyActionType>=>{

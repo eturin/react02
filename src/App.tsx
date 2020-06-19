@@ -9,30 +9,30 @@ import Settings from "./components/Settings/Settings";
 
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import LoginContainer from "./components/Login/LoginContainer";
-import ProfileContentContainer from "./components/ProfileContent/ProfileContentContainer";
 import withLoginRedirect from "./components/HOC/withLoginRedirect";
 import {initApp, initAppType} from "./redux/appReducer";
 import {getInitedApp} from "./components/UTILS/utils";
 import withSuspense from "./components/HOC/withSuspense";
 import {StateType} from "./redux/store";
+import ProfileContent from "./components/ProfileContent/ProfileContent";
 
 //ленивая загрузка
 const News             =React.lazy(() => import("./components/News/News"));
 const Musics           =React.lazy(() => import("./components/Musics/Musics"));
 const FindUserContainer=React.lazy(() => import("./components/FindUser/FindUserContainer"));
 
-let WithLoginProfileContentContainer = withLoginRedirect(ProfileContentContainer);
+let WithLoginProfileContent          = withLoginRedirect(ProfileContent);
 let WithLoginDialogsContainer        = withLoginRedirect(DialogsContainer);
 let WithLoginSettings                = withLoginRedirect(Settings);
 
-interface IRecipeProps {
-  inited?: boolean;
-  initApp?: any;
+interface PropsType {
+  inited : boolean;
+  initApp: initAppType;
 }
 
 interface IRecipeState {}
 
-class App extends React.Component<IRecipeProps, IRecipeState> {
+class App extends React.Component<PropsType, IRecipeState> {
   error = (promiseRejectionEvent:any) =>{
     alert(promiseRejectionEvent);
   }
@@ -54,7 +54,7 @@ class App extends React.Component<IRecipeProps, IRecipeState> {
           <div className={css.Content}>
             <Switch>
               <Route exact path='/'                  render={() => <Redirect to='/profile' />}/>
-              <Route path='/profile/:id?'            render={() => <WithLoginProfileContentContainer/>}/>
+              <Route path='/profile/:id?'            render={() => <WithLoginProfileContent/>}/>
               <Route path='/dialogs/:id?'            render={() => <WithLoginDialogsContainer/>}/>
               <Route path='/finduser/:cnt?/:id?'     render={withSuspense(FindUserContainer)}/>
               <Route path='/news'                    render={withSuspense(News)             }/>

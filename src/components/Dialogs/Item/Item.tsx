@@ -3,13 +3,13 @@ import css from './Item.module.css'
 import {NavLink} from "react-router-dom";
 
 type PropsType = {
-    img?            :string| undefined;
-    id              :number;
-    userName        :string;
-    hasNewMessages? : boolean | undefined;
-    newMessagesCount: number;
-    lastDialogActivityDate?: string | undefined;
-    lastUserActivityDate?  : string | undefined;
+    img?                   : string;
+    id                     : number;
+    userName               : string;
+    hasNewMessages?        : boolean;
+    newMessagesCount       : number;
+    lastDialogActivityDate?: string;
+    lastUserActivityDate?  : string;
 }
 
 const Item:React.FC<PropsType> = (props)=>{

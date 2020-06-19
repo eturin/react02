@@ -6,7 +6,7 @@ type PropsType = {
     idDilog :number;
     senderId:number;
     img     :string;
-    imgMy   :string|undefined;
+    imgMy?  :string;
     body    :string;
 }
 

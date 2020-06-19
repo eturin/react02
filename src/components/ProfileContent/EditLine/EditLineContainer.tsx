@@ -1,17 +1,18 @@
 import {connect} from "react-redux";
 import {stopEditLine} from "../../../redux/profileContentPageReducer";
 import {getIDforDilog, getMyID, getValueForDilog} from "../../UTILS/utils";
-import EditLineWithHook from "./EditLineWithHook";
+import EditLineWithHook, {PropsDispatchType, PropsStateType} from "./EditLineWithHook";
 import {StateType} from "../../../redux/store";
-
-const mstp = (state:StateType,props:any) =>{
+type OwnProps = {
+    source: string
+};
+const mstp = (state:StateType,props:OwnProps):PropsStateType =>{
     return {
         id       : getIDforDilog(state),
-        myId     : getMyID(state),
         text     : getValueForDilog(state,props.source),
         source   : props.source
     }
 }
 
-const EditLineContainer = connect(mstp,{stopEditLine})(EditLineWithHook);
+const EditLineContainer = connect<PropsStateType,PropsDispatchType,OwnProps,StateType>(mstp,{stopEditLine})(EditLineWithHook);
 export default EditLineContainer;

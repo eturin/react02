@@ -5,7 +5,8 @@ import {getProfile} from "../../../redux/profileContentPageReducer";
 import {getMyID, getProf} from "../../UTILS/utils";
 import {StateType} from "../../../redux/store";
 
-const mapStateToProps = (state:StateType,ownProps:any) => {
+type OwnPropsType = {}
+const mapStateToProps = (state:StateType,ownProps:OwnPropsType) => {
     const State = getProf(state);
     return {
         text                     : "",

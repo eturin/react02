@@ -1,15 +1,19 @@
 import {aXiOs} from "../components/UTILS/utils";
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./store";
 
 const ADD_USERS        ='findUser/AddUsers';
 const SET_PAGE         ='findUser/SetPage';
 const SET_COUNT        ='findUser/SetCount';
 const FOLLOW           ='findUser/onFollow';
 const IS_WATING_FOLLOW ='findUser/isWatingFollow';
-export type FinfUserADD_USERS        ={type: typeof ADD_USERS; cnt:number; page:number; mUsers: Array<UserType>;totalCount:number;};
+export type FinfUserADD_USERS        ={type: typeof ADD_USERS; cnt:number; page:number; mUsers: Array<FindUserUserType>;totalCount:number;};
 export type FinfUserSET_PAGE         ={type: typeof SET_PAGE; Page:number};
 export type FinfUserSET_COUNT        ={type: typeof SET_COUNT; count:number};
 export type FinfUserFOLLOW           ={type: typeof FOLLOW; id:number; isFollow:boolean};
 export type FinfUserIS_WATING_FOLLOW ={type: typeof IS_WATING_FOLLOW; id:number};
+export type AnyActionType = FinfUserADD_USERS | FinfUserSET_PAGE | FinfUserSET_COUNT | FinfUserFOLLOW | FinfUserIS_WATING_FOLLOW;
+
 export type FindUserStateType = {
     count  : number;
     Page: number;
@@ -32,7 +36,7 @@ let initState:FindUserStateType ={
     mUsers :[]
 }
 
-const findUserReducer = (state = initState, action:any):FindUserStateType =>{
+const findUserReducer = (state = initState, action:AnyActionType):FindUserStateType =>{
     let stateCopy = state;
 
     switch (action.type) {
@@ -99,8 +103,8 @@ export const setCount       = (count:number):FinfUserSET_COUNT                  
 export type setCountType = typeof setCount;
 
 //thunk creaters
-export const Follow_UnFollow = (isFollow:boolean,id:number) => {
-    return async (dispatch:any) => {
+export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<void, StateType, void, AnyActionType> => {
+    return async (dispatch) => {
         dispatch(isWatingFollow(id));
         try {
             if (isFollow) {
@@ -127,8 +131,8 @@ export const Follow_UnFollow = (isFollow:boolean,id:number) => {
 }
 export type Follow_UnFollowType = typeof Follow_UnFollow;
 
-export const getMore         = (count:number,page:number) => {
-    return async (dispatch:any) => {
+export const getMore         = (count:number,page:number):ThunkAction<void, StateType, void, AnyActionType> => {
+    return async (dispatch) => {
         try{
             let resp = await aXiOs.get(`users?page=${page}&count=${count}`);
             dispatch(addUsers(count, page, resp.data.items, resp.data.totalCount));

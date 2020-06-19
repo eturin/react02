@@ -14,16 +14,16 @@ export type AuthSET_IMG        = { type: typeof SET_IMG;        id:number,img:st
 export type AnyActionType = AuthSET_ME | AuthSET_LOADING_ME | AuthSET_CAPTCHA | AuthSET_IMG;
 
 export type AuthDataType = {
-    id   : number | undefined,
-    email: string | undefined,
-    login: string | undefined
+    id?   : number  ,
+    email?: string ,
+    login?: string
 }
 export type AuthStateType = {
-    loading: boolean,
-    cnt: number,
-    data: AuthDataType,
-    img  : string | undefined,
-    captcha: string
+    loading : boolean,
+    cnt     : number,
+    data    : AuthDataType,
+    img?    : string ,
+    captcha?: string
 }
 
 let initState: AuthStateType = {
@@ -34,11 +34,11 @@ let initState: AuthStateType = {
         email: undefined,
         login: undefined
     },
-    img  : undefined,
+    img     : undefined,
     captcha: ''
 }
 
-const authReducer = (state = initState, action:any):AuthStateType=>{
+const authReducer = (state = initState, action:AnyActionType):AuthStateType=>{
     let copyState = state;
 
     switch (action.type){

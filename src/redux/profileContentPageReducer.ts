@@ -1,6 +1,9 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {stopSubmit} from "redux-form";
 import {setImg} from "./authReducer";
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./store";
+import {AnyActionType} from "./findUserReducer";
 
 const SET_PROFILE      ='profileContentPage/SetProfile';
 const SET_STATUS       ='profileContentPage/SetStatus';
@@ -12,16 +15,17 @@ export type ProfileSET_STATUS       ={type: typeof SET_STATUS;id:number;status:s
 export type ProfileSET_LOADING_P    ={type: typeof SET_LOADING_P;id:number;};
 export type ProfileSET_SENDING      ={type: typeof SET_SENDING;};
 export type ProfileSET_IMG          ={type: typeof SET_IMG;id:number;img:string;};
+type AnyActionType =  ProfileSET_PROFILE | ProfileSET_STATUS | ProfileSET_LOADING_P | ProfileSET_SENDING | ProfileSET_IMG;
 
 export type ProfileContactsType = {
-    github?: string | null;
-    vk?: string | null;
-    facebook?: string | null;
+    github?   : string | null;
+    vk?       : string | null;
+    facebook? : string | null;
     instagram?: string | null;
-    twitter?: string | null;
-    website?: string | null;
-    youtube?: string | null;
-    mainLink?: string | null;
+    twitter?  : string | null;
+    website?  : string | null;
+    youtube?  : string | null;
+    mainLink? : string | null;
 }
 export type ProfilePostType ={
     id: number;
@@ -31,7 +35,7 @@ export type ProfilePostType ={
 }
 export type ProfileStateType = {
     mPosts: Array<ProfilePostType>;
-    id: number|undefined;
+    id?: number;
     loading: boolean;
     text: string;
     status: string;
@@ -41,7 +45,7 @@ export type ProfileStateType = {
     lookingForAJobDescription:string;
     fullName: string;
     contacts: ProfileContactsType;
-    img: string | null | undefined;
+    img: string | null ;
 }
 export let initState:ProfileStateType = {
     mPosts: [
@@ -72,13 +76,13 @@ export let initState:ProfileStateType = {
     img: "/ava.jpeg"
 };
 
-const profileContentPageReducer = (state = initState, action:any):ProfileStateType => {
+const profileContentPageReducer = (state = initState, action:AnyActionType):ProfileStateType => {
     let stateCopy = state;
     if(action.type === SET_IMG){
         if(action.id === state.id){
             stateCopy = {
                 ...state,
-                img  : action.img.large!=null ? action.img.large: action.img.small
+                img : action.img
             }
         }
     }else if(action.type === SET_PROFILE){
@@ -121,19 +125,6 @@ const profileContentPageReducer = (state = initState, action:any):ProfileStateTy
     return stateCopy;
 }
 
-/*export const getPosts = (state) => state.mPosts;
-export const fAddPost = (state) => {
-    let mPosts=getPosts(state);
-    mPosts.push(
-        {
-            id  : mPosts.length,
-            text: getText(state),
-            img : getAva(state),
-            cnt : 0
-        });
-    setText(state,'');
-};*/
-
 export default profileContentPageReducer;
 
 //action creaters
@@ -144,8 +135,8 @@ export const setSending     = ():ProfileSET_SENDING                             
 export const setImage       = (id:number,img:string):ProfileSET_IMG                  => ({ type: SET_IMG          , id: id, img: img                                 });
 
 //thunk creaters
-export const sendImg         = (file:any,userId:number)=> {
-    return async (dispatch:any) => {
+export const sendImg         = (file:any,userId:number):ThunkAction<void, StateType, void, AnyActionType>=> {
+    return async (dispatch) => {
         try {
             let formdata = new FormData();
             formdata.append('image',file)
@@ -169,25 +160,29 @@ export const sendImg         = (file:any,userId:number)=> {
         }
     }
 }
-export const getProfile      = (id:number) => {
-    return async (dispatch:any) => {
-        dispatch(setLoadingProf(id));
-        try {
-            let resp = await aXiOs.get(`profile/${id}`)
-            dispatch(setProfile(id, resp.data));
-            resp = await aXiOs.get(`profile/status/${id}`)
-            dispatch(setStatus(id, resp.data));
-        }catch (error) {
+export const getProfile      = (id:number|undefined):ThunkAction<void, StateType, void, AnyActionType> => {
+    return async (dispatch) => {
+        if(id) {
+            dispatch(setLoadingProf(id));
             try {
-                alert("ERR: getProfile: " + error.response.data.message)
-            } catch (e) {
-                alert("ERR: getProfile: " + error)
+                let resp = await aXiOs.get(`profile/${id}`)
+                dispatch(setProfile(id, resp.data));
+                resp = await aXiOs.get(`profile/status/${id}`)
+                dispatch(setStatus(id, resp.data));
+            } catch (error) {
+                try {
+                    alert("ERR: getProfile: " + error.response.data.message)
+                } catch (e) {
+                    alert("ERR: getProfile: " + error)
+                }
             }
         }
     }
 }
-export const stopEditLine    = (id:number,source:string,text:string) =>{
-    return async (dispatch:any) => {
+export type getProfileType = typeof getProfile;
+
+export const stopEditLine    = (id:number,source:string,text:string) :ThunkAction<void, StateType, void, AnyActionType>=>{
+    return async (dispatch) => {
         if(source==='status') {
             try {
                 let resp = await aXiOs.put(`/profile/status`, {status: text});
@@ -204,9 +199,10 @@ export const stopEditLine    = (id:number,source:string,text:string) =>{
         }
     }
 }
+export type stopEditLineType = typeof stopEditLine;
 
-export const sendProf = (form:any) =>{
-    return async (dispatch:any) => {
+export const sendProf = (form:any):ThunkAction<void, StateType, void, AnyActionType> =>{
+    return async (dispatch) => {
         dispatch(setSending());
         try {
             let resp = await aXiOs.put(`/profile`, {
