@@ -2,6 +2,7 @@ import {aXiOs} from "../components/UTILS/utils";
 import {ThunkAction} from "redux-thunk";
 import {StateType} from "./store";
 import {FinfUserADD_USERS} from "./findUserReducer";
+import {InjectedFormProps} from "redux-form";
 
 
 const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
@@ -196,8 +197,11 @@ export const getMessages =(id:number):ThunkAction<void, StateType, void , AnyAct
     }
 }
 export type getMessagesType = typeof getMessages;
-
-export const sendNewMessage = (form:any):ThunkAction<void, StateType, void, AnyActionType> =>{
+type T = {
+    idDilog: number,
+    body   : string
+}
+export const sendNewMessage = (form:T):ThunkAction<void, StateType, void, AnyActionType> =>{
     return async (dispatch) =>{
         dispatch(setSending(form.idDilog));
         try{
