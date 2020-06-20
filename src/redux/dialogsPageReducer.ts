@@ -34,8 +34,8 @@ export type DialogItemType = {
     img?                   : string ;
     userName               : string ;
     hasNewMessages?        : boolean;
-    lastDialogActivityDate?: string ;
-    lastUserActivityDate?  : string ;
+    lastDialogActivityDate?: Date  ;
+    lastUserActivityDate?  : Date ;
     newMessagesCount?      : number ;
 }
 export type DialogStateType = {
