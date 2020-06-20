@@ -4,7 +4,6 @@ import EditLineContainer from "../EditLine/EditLineContainer";
 import Loading from "../../Loading/Loading";
 import {NavLink} from "react-router-dom";
 import { getProfileType } from "../../../redux/profileContentPageReducer";
-import {RouteComponentProps} from "react-router";
 
 export type PropsStateType = {
     text                     : string,

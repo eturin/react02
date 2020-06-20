@@ -17,7 +17,7 @@ const mapStateToProps = (state:StateType, props:OwnPropsType):PropsStateType =>{
     };
 };
 
-const DialogsContainer = compose(
+const DialogsContainer = compose<any>(
     withRouter,
     connect<PropsStateType,PropsDispathType,OwnPropsType,StateType>(mapStateToProps, {getDialogs,setLoadingDialogs,addToDilogs})
 )(Dialogs);

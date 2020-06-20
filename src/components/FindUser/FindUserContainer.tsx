@@ -29,7 +29,7 @@ const mapStateToProps   = (state:StateType, ownProps:OwnPropsType):PropsStateTyp
     }
 }
 
-const FindUserContainer = compose(
+const FindUserContainer = compose<any>(
     withRouter,
     connect<PropsStateType,
             PropsDispatchType,

@@ -35,7 +35,7 @@ const mapStateToProps = (state:StateType,ownProps:OwnPropsType):PropsStateType =
 }
 
 
-const ProfContainer = compose(
+const ProfContainer = compose<any>(
     withRouter,
     connect<PropsStateType,PropsDispatchType,OwnPropsType,StateType>(mapStateToProps, {getProfile})
 )(Prof);
