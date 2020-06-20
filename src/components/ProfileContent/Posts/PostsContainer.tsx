@@ -1,10 +1,11 @@
 import {connect} from "react-redux";
-import Posts from "./Posts";
+import Posts, {PropsType} from "./Posts";
 import {StateType} from "../../../redux/store";
+import {ProfilePostType} from "../../../redux/profileContentPageReducer";
 
-const mapStateToProps = (state:StateType) =>{
+const mapStateToProps = (state:StateType):PropsType =>{
     let mPosts = state.ProfileContentPage.mPosts;
-    mPosts.sort((a:any,b:any)=>{ return b.id-a.id;});
+    mPosts.sort((a:ProfilePostType,b:ProfilePostType)=>{ return b.id-a.id;});
 
     return {
         mPosts: mPosts
@@ -12,5 +13,5 @@ const mapStateToProps = (state:StateType) =>{
 
 };
 
-const PostsContainer = connect(mapStateToProps, {})(Posts);
+const PostsContainer = connect<PropsType,{},{},StateType>(mapStateToProps, {})(Posts);
 export default PostsContainer;

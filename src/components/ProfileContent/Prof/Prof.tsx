@@ -13,18 +13,19 @@ export type PropsStateType = {
     lookingForAJob           : boolean,
     lookingForAJobDescription: string
     fullName                 : string,
-    github                   : string,
-    vk                       : string,
-    facebook                 : string,
-    instagram                : string,
-    twitter                  : string,
-    website                  : string,
-    youtube                  : string,
-    mainLink                 : string,
+    github?                  : string|null,
+    vk?                      : string|null,
+    facebook?                : string|null,
+    instagram?               : string|null,
+    twitter?                 : string|null,
+    website?                 : string|null,
+    youtube?                 : string|null,
+    mainLink?                : string|null,
     large                    : string,
-    id                       : number,
-    myID?                    : number
-} & RouteComponentProps<{id:string;}>
+    id?                      : number,
+    myID?                    : number,
+    urlid?                   : number
+};
 export type PropsDispatchType = {
     getProfile: getProfileType;
 }
@@ -33,20 +34,14 @@ type ST = {}
 
 class Prof extends React.Component<PropsType,ST> {
     componentDidMount() {
-        let id:number|undefined  = this.props.match.params.id? parseInt(this.props.match.params.id) : this.props.myID;
-        this.props.getProfile(id);
+        this.props.getProfile(this.props.urlid);
 
     }
     componentDidUpdate(prevProps:PropsType, prevState:ST) {
-        let id: number|undefined=this.props.match.params.id ?  parseInt(this.props.match.params.id) : undefined;
-        if(id) id = this.props.myID;
-        let idFromURL: number |undefined = prevProps.match.params.id? parseInt(prevProps.match.params.id): undefined;
-
         if(prevProps!=null
-           && idFromURL !==undefined
-           && id !== idFromURL) {
-            id = idFromURL;
-            this.props.getProfile(id);
+           && this.props.urlid
+           && prevProps.urlid !== this.props.urlid) {
+            this.props.getProfile(this.props.urlid);
         }
     }
 

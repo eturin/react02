@@ -1,13 +1,17 @@
-import {withRouter} from "react-router"
+import {RouteComponentProps, withRouter} from "react-router"
 import {connect} from "react-redux";
-import Prof from "./Prof";
+import {compose} from "redux"
+import Prof, {PropsStateType, PropsDispatchType} from "./Prof";
 import {getProfile} from "../../../redux/profileContentPageReducer";
 import {getMyID, getProf} from "../../UTILS/utils";
 import {StateType} from "../../../redux/store";
 
-type OwnPropsType = {}
-const mapStateToProps = (state:StateType,ownProps:OwnPropsType) => {
+
+type OwnPropsType = RouteComponentProps<{id:string;}>
+const mapStateToProps = (state:StateType,ownProps:OwnPropsType):PropsStateType => {
     const State = getProf(state);
+    let id: number|undefined=ownProps.match.params.id ?  parseInt(ownProps.match.params.id) : getMyID(state);
+
     return {
         text                     : "",
         loading                  : State.loading,
@@ -25,10 +29,14 @@ const mapStateToProps = (state:StateType,ownProps:OwnPropsType) => {
         mainLink                 : State.contacts.mainLink,
         large                    : State.img ? State.img : '/empty.jpeg',
         id                       : State.id,
-        myID                     : getMyID(state)
+        myID                     : getMyID(state),
+        urlid                    : id
     };
 }
 
 
-const ProfContainer = connect(mapStateToProps, {getProfile})(withRouter(Prof));
+const ProfContainer = compose(
+    withRouter,
+    connect<PropsStateType,PropsDispatchType,OwnPropsType,StateType>(mapStateToProps, {getProfile})
+)(Prof);
 export default ProfContainer;
