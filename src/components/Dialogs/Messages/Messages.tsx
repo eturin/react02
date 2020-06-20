@@ -76,7 +76,7 @@ type PST = {
     sending     : boolean;
 }
 
-class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,string>> {
+class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>> {
     componentDidMount() {
         this.props.initialize({ idDilog:this.props.idDilog });
     }
