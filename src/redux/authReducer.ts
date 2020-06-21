@@ -3,14 +3,14 @@ import {stopSubmit} from 'redux-form'
 import {ThunkAction} from "redux-thunk";
 import {getState, StateType} from "./store";
 
-
 const SET_ME           ='auth/SetMe';
 const SET_LOADING_ME   ='auth/SetLoadingMe';
 const SET_CAPTCHA      ='auth/SetCaptcha';
 const SET_IMG          ='auth/SetImg';
-export type AuthSET_ME         = { type: typeof SET_ME;         data:AuthDataType};
-export type AuthSET_LOADING_ME = { type: typeof SET_LOADING_ME;                  };
-export type AuthSET_CAPTCHA    = { type: typeof SET_CAPTCHA;    url:string       };
+
+export type AuthSET_ME         = { type: typeof SET_ME;         data:AuthDataType   };
+export type AuthSET_LOADING_ME = { type: typeof SET_LOADING_ME;                     };
+export type AuthSET_CAPTCHA    = { type: typeof SET_CAPTCHA;    url:string          };
 export type AuthSET_IMG        = { type: typeof SET_IMG;        id:number,img:string};
 export type AnyActionType = AuthSET_ME | AuthSET_LOADING_ME | AuthSET_CAPTCHA | AuthSET_IMG;
 
@@ -30,16 +30,10 @@ export type AuthStateType = {
 let initState: AuthStateType = {
     loading: false,
     cnt: 0,
-    data: {
-        id   : undefined,
-        email: undefined,
-        login: undefined
-    },
-    img     : undefined,
-    captcha: ''
+    data: {}
 }
 
-const authReducer = (state = initState, action:AnyActionType):AuthStateType=>{
+export const authReducer = (state = initState, action:AnyActionType):AuthStateType=>{
     let copyState = state;
 
     switch (action.type){
@@ -76,7 +70,7 @@ const authReducer = (state = initState, action:AnyActionType):AuthStateType=>{
     return copyState;
 }
 
-export default authReducer;
+
 
 //action creaters
 export const setMe          = (data:AuthDataType):AuthSET_ME      => ({ type: SET_ME           , data: data                                       });
@@ -85,7 +79,7 @@ export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SE
 export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
-export const authMe          = ():ThunkAction<void, StateType|undefined, void, AnyActionType> => {
+export const authMe          = ():ThunkAction<void, StateType, void, AnyActionType> => {
     return async (dispatch ) => {
         dispatch(setLoadingMe());
         try {

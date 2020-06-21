@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {Redirect, Route, RouteComponentProps, Switch, withRouter} from "react-router"
+import {Redirect, Route, Switch} from "react-router"
 import css from './App.module.css'
 
 import Header from "./components/Header/Header";

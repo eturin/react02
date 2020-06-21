@@ -17,7 +17,7 @@ let initState: AppStateType = {
     url_to_go_back_after_redirect: '/'
 }
 
-const appReducer = (state = initState, action:AnyActionType):AppStateType =>{
+export const appReducer = (state = initState, action:AnyActionType):AppStateType =>{
     let copyState = state;
     switch(action.type){
         case INITED_APP:
@@ -53,4 +53,3 @@ export const initApp = ():ThunkAction<void, StateType, void, AnyActionType>=>{
     }
 }
 export type initAppType = typeof initApp;
-export default appReducer;

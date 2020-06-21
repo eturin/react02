@@ -1,9 +1,6 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {ThunkAction} from "redux-thunk";
 import {getState, StateType} from "./store";
-import {FinfUserADD_USERS} from "./findUserReducer";
-import {InjectedFormProps} from "redux-form";
-
 
 const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
 const SET_DIALOGS         = 'dialogPage/SetDialogs';
@@ -55,7 +52,7 @@ let initState:DialogStateType =  {
     id: undefined
 };
 
-const dialogsPageReducer = (state = initState, action:AnyActionType):DialogStateType =>{
+export const dialogsPageReducer = (state = initState, action:AnyActionType):DialogStateType =>{
     let stateCopy =state;
     switch (action.type) {
         case SET_LOADING_DIALOGS:
@@ -128,8 +125,6 @@ const dialogsPageReducer = (state = initState, action:AnyActionType):DialogState
 
     return stateCopy;
 }
-
-export default dialogsPageReducer;
 
 //action creaters
 export const setLoadingDialogs = ():DialogSET_LOADING_DIALOGS                                 => ({type: SET_LOADING_DIALOGS})

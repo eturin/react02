@@ -76,7 +76,7 @@ export let initState:ProfileStateType = {
     img: "/ava.jpeg"
 };
 
-const profileContentPageReducer = (state = initState, action:AnyActionType):ProfileStateType => {
+export const profileContentPageReducer = (state = initState, action:AnyActionType):ProfileStateType => {
     let stateCopy = state;
     if(action.type === SET_IMG){
         if(action.id === state.id){
@@ -125,7 +125,7 @@ const profileContentPageReducer = (state = initState, action:AnyActionType):Prof
     return stateCopy;
 }
 
-export default profileContentPageReducer;
+
 
 //action creaters
 export const setProfile     = (id:number,obj:any):ProfileSET_PROFILE                 => ({ type: SET_PROFILE      , id: id, obj:obj                                  });

@@ -36,7 +36,7 @@ let initState:FindUserStateType ={
     mUsers :[]
 }
 
-const findUserReducer = (state = initState, action:AnyActionType):FindUserStateType =>{
+export const findUserReducer = (state = initState, action:AnyActionType):FindUserStateType =>{
     let stateCopy = state;
 
     switch (action.type) {
@@ -90,8 +90,6 @@ const findUserReducer = (state = initState, action:AnyActionType):FindUserStateT
 
     return stateCopy;
 }
-
-export default findUserReducer;
 
 //action creaters
 export const onFollow       = (id:number,isFollow:boolean):FinfUserFOLLOW                 => ({ type: FOLLOW           , id:id, isFollow:isFollow                                  });

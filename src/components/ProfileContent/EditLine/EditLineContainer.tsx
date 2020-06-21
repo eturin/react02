@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {stopEditLine} from "../../../redux/profileContentPageReducer";
-import {getIDforDilog, getMyID, getValueForDilog} from "../../UTILS/utils";
+import {getIDforDilog, getValueForDilog} from "../../UTILS/utils";
 import EditLineWithHook, {PropsDispatchType, PropsStateType} from "./EditLineWithHook";
 import {StateType} from "../../../redux/store";
 type OwnProps = {

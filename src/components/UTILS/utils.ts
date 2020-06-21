@@ -31,7 +31,7 @@ export const getUrlToBack      =(state:StateType):string            => state.App
 export const getFriends        =(state:StateType):Array<FriendType> => state.NavBar.FriendsPage.mFriends;
 export const getInitedApp      =(state:StateType):boolean           => state.App.isInitApp;
 export const getIDforDilog     =(state:StateType):number|undefined  => state.ProfileContentPage.id;
-export const getValueForDilog  =(state:StateType,source:string):string|number=> state.ProfileContentPage[source];
+export const getValueForDilog  =(state:StateType,source:string):any=> state.ProfileContentPage[source];
 export const getProf           =(state:StateType):ProfileStateType  => state.ProfileContentPage;
 
 //reselectors

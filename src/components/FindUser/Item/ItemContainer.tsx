@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {FindUserUserType, Follow_UnFollow, Follow_UnFollowType} from "../../../redux/findUserReducer";
+import {Follow_UnFollow} from "../../../redux/findUserReducer";
 import Item, {PropsStateType,PropsDispatchType} from "./Item";
 import {getUserByID} from "../../UTILS/utils";
 import {StateType} from "../../../redux/store";

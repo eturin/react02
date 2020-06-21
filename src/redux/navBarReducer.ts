@@ -20,11 +20,10 @@ let initState:NavBarStateType = {
     }
 };
 
-const navBarReducer = (state=initState):NavBarStateType => {
+export const navBarReducer = (state=initState):NavBarStateType => {
     let stateCopy = state;
     return stateCopy;
 }
 
 export const getFriends = (state:StateType):Array<FriendType> => state.NavBar.FriendsPage.mFriends;
 
-export  default navBarReducer;
