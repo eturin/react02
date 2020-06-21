@@ -54,7 +54,7 @@ export const getUserNameForDialog = createSelector(
 export const getStateDialogs   = createSelector(
     [_getStateDialogs],
     (Dialogs)    => {
-                    return [...Dialogs].sort((a,b)=> a.lastDialogActivityDate-b.lastDialogActivityDate);
+                    return [...Dialogs].sort((a,b)=> (a.lastDialogActivityDate ? a.lastDialogActivityDate.getTime(): 0 ) - (b.lastDialogActivityDate ? b.lastDialogActivityDate.getTime():0));
             }
 )
 

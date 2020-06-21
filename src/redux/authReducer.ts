@@ -1,7 +1,8 @@
 import {aXiOs} from '../components/UTILS/utils'
 import {stopSubmit} from 'redux-form'
 import {ThunkAction} from "redux-thunk";
-import {StateType} from "./store";
+import {getState, StateType} from "./store";
+
 
 const SET_ME           ='auth/SetMe';
 const SET_LOADING_ME   ='auth/SetLoadingMe';
@@ -84,8 +85,8 @@ export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SE
 export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
-export const authMe          = ():ThunkAction<void, StateType, void, AnyActionType> => {
-    return async (dispatch) => {
+export const authMe          = ():ThunkAction<void, StateType|undefined, void, AnyActionType> => {
+    return async (dispatch ) => {
         dispatch(setLoadingMe());
         try {
             let resp = await aXiOs.get(`auth/me`);
@@ -106,7 +107,7 @@ export const authMe          = ():ThunkAction<void, StateType, void, AnyActionTy
 }
 export type authMeType = typeof authMe;
 export const logIn           = (form:any):ThunkAction<void, StateType, void, AnyActionType> => {
-    return async (dispatch:any) => {
+    return async (dispatch) => {
         try {
             let resp = await aXiOs.post(`auth/login`, {
                 email     : form.login,
@@ -115,7 +116,7 @@ export const logIn           = (form:any):ThunkAction<void, StateType, void, Any
                 captcha   : form.captcha
             });
             if (resp.data.resultCode === 0) {
-                authMe()(dispatch);
+                authMe()(dispatch, getState);
             } else if (resp.data.resultCode === 1) {
                 dispatch(stopSubmit('login', {
                     login : 'error',
@@ -148,7 +149,7 @@ export const logOut          = ():ThunkAction<void, StateType, void, AnyActionTy
         try {
             let resp = await aXiOs.post(`auth/logout`);
             if (resp.data.resultCode === 0)
-                authMe()(dispatch);
+                authMe()(dispatch, getState);
             else
                 alert(resp.data.messages);
         }catch (error) {

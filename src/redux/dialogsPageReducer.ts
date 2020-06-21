@@ -1,6 +1,6 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {ThunkAction} from "redux-thunk";
-import {StateType} from "./store";
+import {getState, StateType} from "./store";
 import {FinfUserADD_USERS} from "./findUserReducer";
 import {InjectedFormProps} from "redux-form";
 
@@ -206,7 +206,7 @@ export const sendNewMessage = (form:T):ThunkAction<void, StateType, void, AnyAct
         dispatch(setSending(form.idDilog));
         try{
             await aXiOs.post(`dialogs/${form.idDilog}/messages`,{body:form.body});
-            getMessages(form.idDilog)(dispatch);
+            getMessages(form.idDilog)(dispatch,getState);
         }catch(error){
            try {
                alert("ERR: send message: " + error.response.data.error)
