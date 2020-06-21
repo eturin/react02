@@ -1,6 +1,6 @@
 import {authMe} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
-import {getState, StateType} from "./store";
+import {/*getState,*/ StateType} from "./store";
 
 const INITED_APP = 'app/InitedAPP';
 const SET_URL    = 'app/SetUrl';
@@ -46,7 +46,7 @@ export type setUrlType = typeof setUrl;
 //thunk creaters
 export const initApp = ():ThunkAction<void, StateType, void, AnyActionType>=>{
     return (dispath)=>{
-        Promise.all([authMe()(dispath,getState)])
+        Promise.all([authMe()(dispath/*,getState*/)])
                .then(()=>{
                     dispath(inited());
                });

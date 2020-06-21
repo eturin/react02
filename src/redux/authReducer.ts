@@ -1,7 +1,7 @@
 import {aXiOs} from '../components/UTILS/utils'
 import {stopSubmit} from 'redux-form'
 import {ThunkAction} from "redux-thunk";
-import {getState, StateType} from "./store";
+import {/*getState,*/ StateType} from "./store";
 
 const SET_ME           ='auth/SetMe';
 const SET_LOADING_ME   ='auth/SetLoadingMe';
@@ -110,7 +110,7 @@ export const logIn           = (form:any):ThunkAction<void, StateType, void, Any
                 captcha   : form.captcha
             });
             if (resp.data.resultCode === 0) {
-                authMe()(dispatch, getState);
+                authMe()(dispatch/*, getState*/);
             } else if (resp.data.resultCode === 1) {
                 dispatch(stopSubmit('login', {
                     login : 'error',
@@ -143,7 +143,7 @@ export const logOut          = ():ThunkAction<void, StateType, void, AnyActionTy
         try {
             let resp = await aXiOs.post(`auth/logout`);
             if (resp.data.resultCode === 0)
-                authMe()(dispatch, getState);
+                authMe()(dispatch/*, getState*/);
             else
                 alert(resp.data.messages);
         }catch (error) {
