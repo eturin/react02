@@ -9,7 +9,7 @@ export type PropsStateType ={
 export type PropsDispatchType ={
     sendImg: sendImgType
 };
-type PropsType = PropsStateType & PropsDispatchType:
+type PropsType = PropsStateType & PropsDispatchType;
 
 const Img:React.FC<PropsType> = (props) =>{
     const [isEdit, changeMode]=useState(false);
