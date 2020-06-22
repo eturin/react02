@@ -7,9 +7,9 @@ type PropsType = {
     id                     : number;
     userName               : string;
     hasNewMessages?        : boolean;
-    newMessagesCount       : number;
-    lastDialogActivityDate?: string;
-    lastUserActivityDate?  : string;
+    newMessagesCount?      : number;
+    lastDialogActivityDate?: Date;
+    lastUserActivityDate?  : Date;
 }
 
 const Item:React.FC<PropsType> = (props)=>{
@@ -18,7 +18,7 @@ const Item:React.FC<PropsType> = (props)=>{
             <img className={css.Img} src={props.img} alt={props.img} />
             <NavLink className={css.A}
                      to={ `/dialogs/${props.id}` }
-                     activeClassName={css.ActiveLink}>{props.userName} {props.newMessagesCount>0? `[${props.newMessagesCount}]`:''}</NavLink>
+                     activeClassName={css.ActiveLink}>{props.userName} {props.newMessagesCount && props.newMessagesCount>0? `[${props.newMessagesCount}]`:''}</NavLink>
         </div>
     );
 }

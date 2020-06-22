@@ -12,12 +12,12 @@ const mapStateToProps   = (state:StateType,ownProps: OwdPropsType):PropsStateTyp
     let x = getUserByID(state,ownProps.id);
     return {
         //key     : x.id,
-        id      : x.id,
-        name    : x.name,
-        img     : x.img,
-        comment : x.comment,
-        follow  : x.follow,
-        isWating: x.isWaiting,
+        id      : x ? x.id : 0,
+        name    : x ? x.name : '',
+        img     : x ? x.img : '',
+        comment : x ? x.comment : '',
+        follow  : x ? x.follow: true,
+        isWating: x ? x.isWaiting: true,
         x       : x
     }
 }

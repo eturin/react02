@@ -49,10 +49,10 @@ const LoginReduxForm = reduxForm<any,any>({
 })(LoginForm);
 
 export type PropsStateType ={
-    isAuth :boolean;
-    id     :number|undefined;
-    url    :string;
-    captcha:string;
+    isAuth  :boolean;
+    id      :number|undefined;
+    url     :string;
+    captcha?:string;
 };
 export type PropsDispatchType ={
     logIn:LoginType;

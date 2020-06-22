@@ -5,13 +5,13 @@ import {FindUserUserType, Follow_UnFollowType} from "../../../redux/findUserRedu
 
 export type PropsStateType = {
     //key     : number;
-    id      : number;
-    name    : string;
-    img     : string|null|undefined;
-    comment : string;
-    follow  : boolean;
-    isWating: boolean;
-    x       : FindUserUserType;
+    id       : number;
+    name?    : string;
+    img?     : string | null;
+    comment? : string;
+    follow   : boolean;
+    isWating?: boolean;
+    x?       : FindUserUserType;
 }
 export type PropsDispatchType = {
     Follow_UnFollow: Follow_UnFollowType;

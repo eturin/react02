@@ -10,5 +10,5 @@ const mstp = (state:StateType):PropsStateType=>{
         login  : getMyLogin(state)
     };
 }
-const AuthContainer = connect<PropsStateType, PropsDispathType,void,StateType>(mstp, {logOut})(Auth);
+const AuthContainer = connect<PropsStateType, PropsDispathType,{},StateType>(mstp, {logOut})(Auth);
 export default AuthContainer;

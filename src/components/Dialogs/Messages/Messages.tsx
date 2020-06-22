@@ -11,8 +11,8 @@ const maxLength100 = maxLength(100);
 
 export interface PropsStateType {
     id             : number;
-    userName       : string;
-    img            : string;
+    userName?      : string;
+    img?           : string;
     imgMy?         : string;
     loadingMessages: boolean;
     Messages       : Array<DialogMessageType>;
@@ -99,7 +99,7 @@ class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>>
         );
     }
 }
-const NewReduxForm = reduxForm<{idDilog: number},PST,string>({
+const NewReduxForm = reduxForm<{idDilog: number, sending:boolean, onSubmit:sendNewMessageType},PST,string>({
     form: 'NewMessage' //уникальное имя формы в state
 })(New);
 

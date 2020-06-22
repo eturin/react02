@@ -4,8 +4,8 @@ import {NavLink} from "react-router-dom";
 import {LogOutType} from "../../../redux/authReducer";
 
 export type PropsStateType ={
-    id   : number|undefined;
-    login: string|undefined;
+    id?   : number;
+    login?: string;
 }
 export type PropsDispathType = {
     logOut: LogOutType

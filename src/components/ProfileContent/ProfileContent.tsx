@@ -4,7 +4,7 @@ import PostsContainer from "./Posts/PostsContainer";
 import ProfContainer from "./Prof/ProfContainer";
 
 type PropsType = {};
-const ProfileContent: React.FC<PropsType> =(props)=>{
+const ProfileContent: React.FC<PropsType> =()=>{
      return (
          <div className={css.ProfileContent}>
              <ProfContainer />

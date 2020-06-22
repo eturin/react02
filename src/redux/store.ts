@@ -8,6 +8,7 @@ import {profileContentPageReducer} from "./profileContentPageReducer";
 import {findUserReducer}           from "./findUserReducer";
 import {appReducer}                from "./appReducer";
 import {authReducer}               from "./authReducer";
+import {setState}                  from "../components/UTILS/utils";
 
 
 let reducers = combineReducers({
@@ -28,6 +29,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(ThunkMiddleware)));
 //let store = createStore(reducers, applyMiddleware(ThunkMiddleware));
 
-export const getState = store.getState.bind(store);
+setState(store.getState.bind(store));
 
 export default store;

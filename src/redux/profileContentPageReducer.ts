@@ -2,7 +2,8 @@ import {aXiOs} from "../components/UTILS/utils";
 import {stopSubmit} from "redux-form";
 import {setImg} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
-import {/*getState,*/ StateType} from "./store";
+import {StateType} from "./store";
+import {getState} from '../components/UTILS/utils'
 
 const SET_PROFILE      ='profileContentPage/SetProfile';
 const SET_STATUS       ='profileContentPage/SetStatus';
@@ -159,6 +160,8 @@ export const sendImg         = (file:any,userId:number):ThunkAction<void, StateT
         }
     }
 }
+export type sendImgType = (file:any,userId:number) => void;
+
 export const getProfile      = (id:number|undefined):ThunkAction<void, StateType, void, AnyActionType> => {
     return async (dispatch) => {
         if(id) {
@@ -186,7 +189,7 @@ export const stopEditLine    = (id:number,source:string,text:string) :ThunkActio
             try {
                 let resp = await aXiOs.put(`/profile/status`, {status: text});
                 if (resp.data.resultCode === 0) {
-                    getProfile(id)(dispatch/*,getState*/);
+                    getProfile(id)(dispatch,getState);
                 }
             }catch(error){
                     try {
@@ -221,7 +224,7 @@ export const sendProf = (form:any):ThunkAction<void, StateType, void, AnyActionT
                 }
             });
             if (resp.data.resultCode === 0)
-                getProfile(form.userId)(dispatch/*,getState*/);
+                getProfile(form.userId)(dispatch,getState);
             else {
                 let inf:any = {};
                 for (let err of resp.data.messages) {

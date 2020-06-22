@@ -1,5 +1,6 @@
 import {StateType} from "./store";
 
+
 export type FriendType = {
     img: string;
     name: string;

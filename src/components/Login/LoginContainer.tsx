@@ -13,5 +13,8 @@ const mstp=(state:StateType):PropsStateType =>{
     }
 }
 
-const LoginContainer = connect<PropsStateType,PropsDispatchType,void,StateType>(mstp,{logIn})(Login);
+const LoginContainer = connect<PropsStateType,
+                               PropsDispatchType,
+                               {},
+                               StateType>(mstp,{logIn})(Login);
 export default LoginContainer;

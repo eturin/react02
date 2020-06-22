@@ -1,6 +1,7 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {ThunkAction} from "redux-thunk";
-import {/*getState,*/ StateType} from "./store";
+import {StateType} from "./store";
+import {getState} from '../components/UTILS/utils'
 
 const SET_LOADING_DIALOGS = 'dialogPage/SetLoadingDialogs';
 const SET_DIALOGS         = 'dialogPage/SetDialogs';
@@ -201,7 +202,7 @@ export const sendNewMessage = (form:T):ThunkAction<void, StateType, void, AnyAct
         dispatch(setSending(form.idDilog));
         try{
             await aXiOs.post(`dialogs/${form.idDilog}/messages`,{body:form.body});
-            getMessages(form.idDilog)(dispatch/*,getState*/);
+            getMessages(form.idDilog)(dispatch,getState);
         }catch(error){
            try {
                alert("ERR: send message: " + error.response.data.error)

@@ -15,6 +15,7 @@ import {getInitedApp} from "./components/UTILS/utils";
 import withSuspense from "./components/HOC/withSuspense";
 import {StateType} from "./redux/store";
 import ProfileContent from "./components/ProfileContent/ProfileContent";
+import Loading from "./components/Loading/Loading";
 
 //ленивая загрузка
 const News             =React.lazy(() => import("./components/News/News"));
@@ -45,7 +46,7 @@ class App extends React.Component<PropsType, IRecipeState> {
   }
 
   render(){
-    if(!this.props.inited) return <Redirect to='/login' /> ;
+    if(!this.props.inited) return <Loading /> ;
 
     return (
         <div className={css.App}>

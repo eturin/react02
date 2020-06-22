@@ -10,6 +10,9 @@ export const aXiOs = Axios.create({
     headers:{'API-KEY':'cb5f1a59-7c67-4a7f-8191-768910f74f3f'}
 });
 
+export let getState: ()=>StateType;
+export const setState = (f:()=>StateType) => getState= f;
+
 //validate
 export const requirdField = (val:any) => !val ? 'Обязательное поле':undefined;
 export const maxLength = (cnt:number) =>{
@@ -31,7 +34,7 @@ export const getUrlToBack      =(state:StateType):string            => state.App
 export const getFriends        =(state:StateType):Array<FriendType> => state.NavBar.FriendsPage.mFriends;
 export const getInitedApp      =(state:StateType):boolean           => state.App.isInitApp;
 export const getIDforDilog     =(state:StateType):number|undefined  => state.ProfileContentPage.id;
-export const getValueForDilog  =(state:StateType,source:string):any=> state.ProfileContentPage[source];
+export const getValueForDilog  =(state:StateType,source:string):any => state.ProfileContentPage[source];
 export const getProf           =(state:StateType):ProfileStateType  => state.ProfileContentPage;
 
 //reselectors
@@ -54,7 +57,7 @@ export const getUserNameForDialog = createSelector(
 export const getStateDialogs   = createSelector(
     [_getStateDialogs],
     (Dialogs)    => {
-                    return [...Dialogs].sort((a,b)=> (a.lastDialogActivityDate ? a.lastDialogActivityDate.getTime(): 0 ) - (b.lastDialogActivityDate ? b.lastDialogActivityDate.getTime():0));
+                    return [...Dialogs].sort((a,b)=> (a.lastDialogActivityDate ? Date.parse(a.lastDialogActivityDate): 0 ) - (b.lastDialogActivityDate ? Date.parse(b.lastDialogActivityDate):0));
             }
 )
 
