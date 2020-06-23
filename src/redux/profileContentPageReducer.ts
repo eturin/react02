@@ -1,6 +1,6 @@
 import {aXiOs} from "../components/UTILS/utils";
 import {stopSubmit} from "redux-form";
-import {setImg} from "./authReducer";
+import {setImg, AuthSET_IMG} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
 import {StateType} from "./store";
 import {getState} from '../components/UTILS/utils'
@@ -15,7 +15,7 @@ export type ProfileSET_STATUS       ={type: typeof SET_STATUS;id:number;status:s
 export type ProfileSET_LOADING_P    ={type: typeof SET_LOADING_P;id:number;};
 export type ProfileSET_SENDING      ={type: typeof SET_SENDING;};
 export type ProfileSET_IMG          ={type: typeof SET_IMG;id:number;img:string;};
-type AnyActionType =  ProfileSET_PROFILE | ProfileSET_STATUS | ProfileSET_LOADING_P | ProfileSET_SENDING | ProfileSET_IMG;
+type AnyActionType =  ProfileSET_PROFILE | ProfileSET_STATUS | ProfileSET_LOADING_P | ProfileSET_SENDING | ProfileSET_IMG | AuthSET_IMG;
 
 export type ProfileContactsType = {
     github?   : string | null;
@@ -135,7 +135,7 @@ export const setSending     = ():ProfileSET_SENDING                             
 export const setImage       = (id:number,img:string):ProfileSET_IMG                  => ({ type: SET_IMG          , id: id, img: img                                 });
 
 //thunk creaters
-export const sendImg         = (file:any,userId:number):ThunkAction<void, StateType, void, AnyActionType>=> {
+export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=> {
     return async (dispatch) => {
         try {
             let formdata = new FormData();
@@ -149,7 +149,7 @@ export const sendImg         = (file:any,userId:number):ThunkAction<void, StateT
             if (resp.data.resultCode === 0) {
                 debugger
                 dispatch(setImage(userId,resp.data.data.photos));
-                dispatch(setImg(userId, resp.data.data.photos.large!=null ? resp.data.data.photos.large: resp.data.data.photos.small));
+                dispatch(setImg(userId, resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small));
             }
         }catch (error) {
             try {
@@ -162,7 +162,7 @@ export const sendImg         = (file:any,userId:number):ThunkAction<void, StateT
 }
 export type sendImgType = (file:any,userId:number) => void;
 
-export const getProfile      = (id:number|undefined):ThunkAction<void, StateType, void, AnyActionType> => {
+export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, StateType, void, AnyActionType> => {
     return async (dispatch) => {
         if(id) {
             dispatch(setLoadingProf(id));
@@ -183,7 +183,7 @@ export const getProfile      = (id:number|undefined):ThunkAction<void, StateType
 }
 export type getProfileType = typeof getProfile;
 
-export const stopEditLine    = (id:number,source:string,text:string) :ThunkAction<void, StateType, void, AnyActionType>=>{
+export const stopEditLine    = (id:number,source:string,text:string) :ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=>{
     return async (dispatch) => {
         if(source==='status') {
             try {
@@ -201,9 +201,9 @@ export const stopEditLine    = (id:number,source:string,text:string) :ThunkActio
         }
     }
 }
-export type stopEditLineType = typeof stopEditLine;
+export type stopEditLineType = (id:number,source:string,text:string) => void;
 
-export const sendProf = (form:any):ThunkAction<void, StateType, void, AnyActionType> =>{
+export const sendProf = (form:any):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) => {
         dispatch(setSending());
         try {

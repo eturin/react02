@@ -24,7 +24,7 @@ const withLoginRedirect = (Component:any) => {
         }
     }
 
-    return connect<PropsStateType,PropsDispatchType,void,StateType>(mstp,{setUrl})(WithRedirect);
+    return connect<PropsStateType,PropsDispatchType, {} ,StateType>(mstp,{setUrl})(WithRedirect);
 }
 
 export default withLoginRedirect;

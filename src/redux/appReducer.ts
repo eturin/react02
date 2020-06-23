@@ -45,7 +45,7 @@ export const setUrl = (url:string):AppActionSET_URL   => ({type: SET_URL, url:ur
 export type setUrlType = typeof setUrl;
 
 //thunk creaters
-export const initApp = ():ThunkAction<void, StateType, void, AnyActionType>=>{
+export const initApp = ():ThunkAction<void, StateType, unknown, AnyActionType>=>{
     return (dispath)=>{
         Promise.all([authMe()(dispath,getState)])
                .then(()=>{
@@ -53,4 +53,4 @@ export const initApp = ():ThunkAction<void, StateType, void, AnyActionType>=>{
                });
     }
 }
-export type initAppType = typeof initApp;
+export type initAppType = () => void;

@@ -74,6 +74,10 @@ export default Messages;
 type PST = {
     idDilog     : number;
     sending     : boolean;
+
+}
+type PDT = {
+    onSubmit    : any
 }
 
 class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>> {
@@ -99,7 +103,7 @@ class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>>
         );
     }
 }
-const NewReduxForm = reduxForm<{idDilog: number, sending:boolean, onSubmit:sendNewMessageType},PST,string>({
+const NewReduxForm = reduxForm<PST ,PST & PDT,string>({
     form: 'NewMessage' //уникальное имя формы в state
 })(New);
 

@@ -80,7 +80,7 @@ export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SE
 export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
-export const authMe          = ():ThunkAction<void, StateType, void, AnyActionType> => {
+export const authMe          = ():ThunkAction<Promise<void>, StateType, void, AnyActionType> => {
     return async (dispatch ) => {
         dispatch(setLoadingMe());
         try {
@@ -101,7 +101,7 @@ export const authMe          = ():ThunkAction<void, StateType, void, AnyActionTy
     }
 }
 export type authMeType = typeof authMe;
-export const logIn           = (form:any):ThunkAction<void, StateType, void, AnyActionType> => {
+export const logIn           = (form:any):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try {
             let resp = await aXiOs.post(`auth/login`, {
@@ -137,9 +137,9 @@ export const logIn           = (form:any):ThunkAction<void, StateType, void, Any
         }
     }
 }
-export type LoginType = typeof logIn;
+export type LoginType = (form:any) => void;
 
-export const logOut          = ():ThunkAction<void, StateType, void, AnyActionType> =>{
+export const logOut          = ():ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) => {
         try {
             let resp = await aXiOs.post(`auth/logout`);

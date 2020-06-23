@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 type PropsType = {
     idDilog :number;
     senderId:number;
-    img     :string;
+    img?    :string;
     imgMy?  :string;
     body    :string;
 }

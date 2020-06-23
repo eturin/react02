@@ -102,7 +102,7 @@ export const setCount       = (count:number):FinfUserSET_COUNT                  
 export type setCountType = typeof setCount;
 
 //thunk creaters
-export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<void, StateType, void, AnyActionType> => {
+export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         dispatch(isWatingFollow(id));
         try {
@@ -128,9 +128,9 @@ export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<void, St
         }
     }
 }
-export type Follow_UnFollowType = typeof Follow_UnFollow;
+export type Follow_UnFollowType =  (isFollow:boolean,id:number) =>void;
 
-export const getMore         = (count:number,page:number):ThunkAction<void, StateType, void, AnyActionType> => {
+export const getMore         = (count:number,page:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try{
             let resp = await aXiOs.get(`users?page=${page}&count=${count}`);

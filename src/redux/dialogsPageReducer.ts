@@ -138,7 +138,7 @@ export const addToMyDilogs     = (id:number, img:string, userName:string):Dialog
 
 
 //thunk creaters
-export const addToDilogs =(id:number):ThunkAction<void, StateType, void , AnyActionType>=>{
+export const addToDilogs =(id:number):ThunkAction<Promise<void>, StateType, unknown , AnyActionType>=>{
     return async (dispatch) => {
         try{
             let resp = await aXiOs.get(`profile/${id}`)
@@ -157,7 +157,7 @@ export const addToDilogs =(id:number):ThunkAction<void, StateType, void , AnyAct
 }
 export type addToDilogsType = typeof addToDilogs;
 
-export const getDialogs =():ThunkAction<void, StateType, void , AnyActionType>=>{
+export const getDialogs =():ThunkAction<Promise<void>, StateType, unknown , AnyActionType>=>{
     return async (dispatch) =>{
         dispatch(setLoadingDialogs());
         try {
@@ -174,7 +174,7 @@ export const getDialogs =():ThunkAction<void, StateType, void , AnyActionType>=>
 }
 export type getDialogsType = typeof getDialogs;
 
-export const getMessages =(id:number):ThunkAction<void, StateType, void , AnyActionType> =>{
+export const getMessages =(id:number):ThunkAction<Promise<void>, StateType, void , AnyActionType> =>{
     return async (dispatch) => {
         dispatch(setLoadingMessages(id));
         try{
@@ -192,12 +192,12 @@ export const getMessages =(id:number):ThunkAction<void, StateType, void , AnyAct
         }
     }
 }
-export type getMessagesType = typeof getMessages;
-type T = {
+export type getMessagesType = (id:number) => void;
+export type FormType = {
     idDilog: number,
     body   : string
 }
-export const sendNewMessage = (form:T):ThunkAction<void, StateType, void, AnyActionType> =>{
+export const sendNewMessage = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) =>{
         dispatch(setSending(form.idDilog));
         try{
@@ -213,4 +213,4 @@ export const sendNewMessage = (form:T):ThunkAction<void, StateType, void, AnyAct
         dispatch(setSending(form.idDilog));
     }
 }
-export type sendNewMessageType = typeof sendNewMessage;
+export type sendNewMessageType = (form:FormType) => void;

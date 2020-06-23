@@ -8,8 +8,8 @@ type PropsType = {
     userName               : string;
     hasNewMessages?        : boolean;
     newMessagesCount?      : number;
-    lastDialogActivityDate?: Date;
-    lastUserActivityDate?  : Date;
+    lastDialogActivityDate?: string;
+    lastUserActivityDate?  : string;
 }
 
 const Item:React.FC<PropsType> = (props)=>{
