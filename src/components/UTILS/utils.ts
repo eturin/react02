@@ -2,7 +2,7 @@ import Axios from "axios";
 import {createSelector} from "reselect";
 import {StateType} from "../../redux/store";
 import {FriendType} from "../../redux/navBarReducer";
-import {ProfileStateType} from "../../redux/profileContentPageReducer";
+import {ProfileContactsType, ProfileStateType} from "../../redux/profileContentPageReducer";
 
 export const aXiOs = Axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -34,7 +34,10 @@ export const getUrlToBack      =(state:StateType):string            => state.App
 export const getFriends        =(state:StateType):Array<FriendType> => state.NavBar.FriendsPage.mFriends;
 export const getInitedApp      =(state:StateType):boolean           => state.App.isInitApp;
 export const getIDforDilog     =(state:StateType):number|undefined  => state.ProfileContentPage.id;
-export const getValueForDilog  =(state:StateType,source:string):any => state.ProfileContentPage[source];
+
+type InnerType<T> = T extends {[key: string]: infer R} ? R : never;
+
+export const getValueForDilog  =(state:StateType,source:string):InnerType<typeof state.ProfileContentPage> => (state.ProfileContentPage as any)[source] ;
 export const getProf           =(state:StateType):ProfileStateType  => state.ProfileContentPage;
 
 //reselectors
@@ -65,7 +68,7 @@ const _getStateMessages        =(state:StateType)    => ({id: state.DialogsPage.
 export const getStateMessages = createSelector(
     [_getStateMessages, _passVal],
     (obj, id:number) => {
-                    return obj.id === id ? [...obj.Messages].sort((a:any,b:any)=> a.addedAt-b.addedAt) : [];
+                    return obj.id === id ? [...obj.Messages].sort((a,b)=> Date.parse(a.addedAt)-Date.parse(b.addedAt)) : [];
             }
 )
 
