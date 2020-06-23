@@ -101,7 +101,13 @@ export const authMe          = ():ThunkAction<Promise<void>, StateType, void, An
     }
 }
 export type authMeType = typeof authMe;
-export const logIn           = (form:any):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
+type FormType = {
+    login: string;
+    pwd:string;
+    rememberMe:boolean;
+    captcha?:string
+}
+export const logIn           = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try {
             let resp = await aXiOs.post(`auth/login`, {
@@ -137,7 +143,7 @@ export const logIn           = (form:any):ThunkAction<Promise<void>, StateType, 
         }
     }
 }
-export type LoginType = (form:any) => void;
+export type LoginType = (form:FormType) => void;
 
 export const logOut          = ():ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) => {

@@ -202,8 +202,21 @@ export const stopEditLine    = (id:number,source:string,text:string) :ThunkActio
     }
 }
 export type stopEditLineType = (id:number,source:string,text:string) => void;
-
-export const sendProf = (form:any):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
+type FormType = {
+    userId:number;
+    LookingForAJob:boolean;
+    LookingForAJobDescription:string;
+    FullName:string;
+    AboutMe:string;
+    Github:string;
+    Vk:string;
+    Facebook:string;
+    Instagram:string;
+    Twitter:string;
+    Website:string;
+    Youtube:string;
+}
+export const sendProf = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) => {
         dispatch(setSending());
         try {
