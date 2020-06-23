@@ -197,11 +197,15 @@ export type FormType = {
     idDilog: number,
     body   : string
 }
+type respType = {
+    resultCode: number,
+    messages: Array<string>
+}
 export const sendNewMessage = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) =>{
         dispatch(setSending(form.idDilog));
         try{
-            await aXiOs.post(`dialogs/${form.idDilog}/messages`,{body:form.body});
+            await aXiOs.post<respType>(`dialogs/${form.idDilog}/messages`,{body:form.body});
             getMessages(form.idDilog)(dispatch,getState);
         }catch(error){
            try {

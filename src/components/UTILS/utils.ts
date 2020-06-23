@@ -35,7 +35,7 @@ export const getFriends        =(state:StateType):Array<FriendType> => state.Nav
 export const getInitedApp      =(state:StateType):boolean           => state.App.isInitApp;
 export const getIDforDilog     =(state:StateType):number|undefined  => state.ProfileContentPage.id;
 
-type InnerType<T> = T extends {[key: string]: infer R} ? R : never;
+export type InnerType<T> = T extends {[key: string]: infer R} ? R : never;
 
 export const getValueForDilog  =(state:StateType,source:string):InnerType<typeof state.ProfileContentPage> => (state.ProfileContentPage as any)[source] ;
 export const getProf           =(state:StateType):ProfileStateType  => state.ProfileContentPage;

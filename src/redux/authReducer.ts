@@ -84,7 +84,7 @@ export const authMe          = ():ThunkAction<Promise<void>, StateType, void, An
     return async (dispatch ) => {
         dispatch(setLoadingMe());
         try {
-            let resp = await aXiOs.get(`auth/me`);
+            let resp = await aXiOs.get<respType & {data:{id:number},photos : {large:string,small:string} }>(`auth/me`);
             if (resp.data.resultCode === 0) {
                 dispatch(setMe(resp.data.data));
                 const id = resp.data.data.id;
@@ -107,10 +107,14 @@ type FormType = {
     rememberMe:boolean;
     captcha?:string
 }
+type respType = {
+    resultCode: number,
+    messages: Array<string>
+}
 export const logIn           = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try {
-            let resp = await aXiOs.post(`auth/login`, {
+            const resp = await aXiOs.post<respType & {data: {userId: number} }>(`auth/login`, {
                 email     : form.login,
                 password  : form.pwd,
                 rememberMe: form.rememberMe,
@@ -126,11 +130,11 @@ export const logIn           = (form:FormType):ThunkAction<Promise<void>, StateT
                 }));
             } else if (resp.data.resultCode === 10) {
                 const err = resp.data.messages && resp.data.messages.length > 0 ? resp.data.messages[0] : undefined;
-                resp = await aXiOs.get(`security/get-captcha-url`);
+                const resp2 = await aXiOs.get<respType & {url:string}>(`security/get-captcha-url`);
                 dispatch(stopSubmit('login', {
                     _error: err
                 }));
-                dispatch(setCaptha(resp.data.url));
+                dispatch(setCaptha(resp2.data.url));
             } else {
                 dispatch(stopSubmit('login', {_error: resp.data.messages && resp.data.messages.length > 0 ? resp.data.messages[0] : undefined}));
             }
@@ -148,7 +152,7 @@ export type LoginType = (form:FormType) => void;
 export const logOut          = ():ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
     return async (dispatch) => {
         try {
-            let resp = await aXiOs.post(`auth/logout`);
+            let resp = await aXiOs.post<respType>(`auth/logout`);
             if (resp.data.resultCode === 0)
                 authMe()(dispatch, getState);
             else

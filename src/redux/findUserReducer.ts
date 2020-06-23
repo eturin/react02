@@ -101,13 +101,17 @@ export type setPageType = typeof setPage;
 export const setCount       = (count:number):FinfUserSET_COUNT                            => ({ type: SET_COUNT        , count:count                                               });
 export type setCountType = typeof setCount;
 
+type respType = {
+    resultCode: number,
+    messages: Array<string>
+}
 //thunk creaters
 export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         dispatch(isWatingFollow(id));
         try {
             if (isFollow) {
-                let resp = await aXiOs.post(`follow/${id}`, {});
+                let resp = await aXiOs.post<respType>(`follow/${id}`, {});
                 if (resp.data.resultCode === 0)
                     dispatch(onFollow(id, isFollow));
                 else

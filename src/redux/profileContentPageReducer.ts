@@ -1,4 +1,4 @@
-import {aXiOs} from "../components/UTILS/utils";
+import {aXiOs, InnerType} from "../components/UTILS/utils";
 import {stopSubmit} from "redux-form";
 import {setImg, AuthSET_IMG} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
@@ -183,7 +183,7 @@ export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, 
 }
 export type getProfileType = typeof getProfile;
 
-export const stopEditLine    = (id:number,source:string,text:string) :ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=>{
+export const stopEditLine    = (id:number,source:string,text:InnerType<ProfileStateType> ) :ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=>{
     return async (dispatch) => {
         if(source==='status') {
             try {
@@ -201,7 +201,7 @@ export const stopEditLine    = (id:number,source:string,text:string) :ThunkActio
         }
     }
 }
-export type stopEditLineType = (id:number,source:string,text:string) => void;
+export type stopEditLineType = (id:number,source:string,text:InnerType<ProfileStateType>) => void;
 type FormType = {
     userId:number;
     LookingForAJob:boolean;

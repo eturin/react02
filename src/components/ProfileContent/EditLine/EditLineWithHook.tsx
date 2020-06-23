@@ -1,8 +1,10 @@
 import React, {useEffect, useState, KeyboardEvent, ChangeEvent} from "react";
-import {stopEditLineType} from "../../../redux/profileContentPageReducer";
+import {ProfileStateType, stopEditLineType} from "../../../redux/profileContentPageReducer";
+import {InnerType} from "../../UTILS/utils";
+
 //import css from './EditLine.module.css'
 export type PropsStateType = {
-    text  : string;
+    text  : InnerType<ProfileStateType> ;
     source: string;
     id?   : number;
 }
