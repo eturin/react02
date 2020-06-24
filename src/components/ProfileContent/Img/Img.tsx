@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import css from './Img.module.css'
 import {sendImgType} from "../../../redux/profileContentPageReducer";
 

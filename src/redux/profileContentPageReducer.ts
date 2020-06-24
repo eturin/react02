@@ -45,7 +45,7 @@ export type ProfileStateType = {
     lookingForAJobDescription:string;
     fullName: string;
     contacts: ProfileContactsType;
-    img: string | null ;
+    img: string;
 }
 export let initState:ProfileStateType = {
     mPosts: [
@@ -99,7 +99,7 @@ export const profileContentPageReducer = (state = initState, action:AnyActionTyp
                 lookingForAJobDescription: action.obj.lookingForAJobDescription,
                 fullName                 : action.obj.fullName,
                 contacts                 : action.obj.contacts,
-                img                      : action.obj.photos.large!=null ? action.obj.photos.large: action.obj.photos.small
+                img                      : action.obj.photos.large!=null ? action.obj.photos.large: action.obj.photos.small ? action.obj.photos.small: ''
             };
     }else if(action.type === SET_STATUS){
         if(action.id === state.id)
@@ -128,11 +128,11 @@ export const profileContentPageReducer = (state = initState, action:AnyActionTyp
 
 
 //action creaters
-export const setProfile     = (id:number,obj:any):ProfileSET_PROFILE                 => ({ type: SET_PROFILE      , id: id, obj:obj                                  });
-export const setStatus      = (id:number,status:string):ProfileSET_STATUS            => ({ type: SET_STATUS       , id: id, status:status                            });
-export const setLoadingProf = (id:number):ProfileSET_LOADING_P                       => ({ type: SET_LOADING_P    , id: id                                           });
-export const setSending     = ():ProfileSET_SENDING                                  => ({ type: SET_SENDING                                                         });
-export const setImage       = (id:number,img:string):ProfileSET_IMG                  => ({ type: SET_IMG          , id: id, img: img                                 });
+export const setProfile     = (id:number,obj:RT):ProfileSET_PROFILE                 => ({ type: SET_PROFILE      , id: id, obj:obj                                  });
+export const setStatus      = (id:number,status:string):ProfileSET_STATUS           => ({ type: SET_STATUS       , id: id, status:status                            });
+export const setLoadingProf = (id:number):ProfileSET_LOADING_P                      => ({ type: SET_LOADING_P    , id: id                                           });
+export const setSending     = ():ProfileSET_SENDING                                 => ({ type: SET_SENDING                                                         });
+export const setImage       = (id:number,img:string):ProfileSET_IMG                 => ({ type: SET_IMG          , id: id, img: img                                 });
 
 //thunk creaters
 export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=> {
@@ -140,16 +140,15 @@ export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void
         try {
             let formdata = new FormData();
             formdata.append('image',file)
-            let resp = await aXiOs.put('/profile/photo', formdata,{
+            let resp = await aXiOs.put<respType & {data:{photos: {small:string|null,large:string|null}}}>('/profile/photo', formdata,{
                 headers:{
                     'content-type':'multipart/form-data'
                 }
             });
 
             if (resp.data.resultCode === 0) {
-                debugger
-                dispatch(setImage(userId,resp.data.data.photos));
-                dispatch(setImg(userId, resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small));
+                dispatch(setImage(userId,resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small ? resp.data.data.photos.small : ''));
+                dispatch(setImg(userId, resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small ? resp.data.data.photos.small : ''));
             }
         }catch (error) {
             try {
@@ -161,16 +160,28 @@ export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void
     }
 }
 export type sendImgType = (file:any,userId:number) => void;
+type RT ={
+    aboutme                  : string,
+    id                       : number,
+    lookingForAJob           : boolean,
+    lookingForAJobDescription: string,
+    fullName                 : string,
+    contacts                 : ProfileContactsType,
+    photos:{
+        large: string|null,
+        small: string|null
+    }
+}
 
 export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, StateType, void, AnyActionType> => {
     return async (dispatch) => {
         if(id) {
             dispatch(setLoadingProf(id));
             try {
-                let resp = await aXiOs.get(`profile/${id}`)
+                let resp = await aXiOs.get<RT>(`profile/${id}`)
                 dispatch(setProfile(id, resp.data));
-                resp = await aXiOs.get(`profile/status/${id}`)
-                dispatch(setStatus(id, resp.data));
+                let resp2 = await aXiOs.get<string>(`profile/status/${id}`)
+                dispatch(setStatus(id, resp2.data));
             } catch (error) {
                 try {
                     alert("ERR: getProfile: " + error.response.data.message)
@@ -183,11 +194,15 @@ export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, 
 }
 export type getProfileType = typeof getProfile;
 
+type respType = {
+    resultCode: number,
+    messages: Array<string>
+}
 export const stopEditLine    = (id:number,source:string,text:InnerType<ProfileStateType> ) :ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=>{
     return async (dispatch) => {
         if(source==='status') {
             try {
-                let resp = await aXiOs.put(`/profile/status`, {status: text});
+                let resp = await aXiOs.put<respType>(`/profile/status`, {status: text});
                 if (resp.data.resultCode === 0) {
                     getProfile(id)(dispatch,getState);
                 }
@@ -220,7 +235,7 @@ export const sendProf = (form:FormType):ThunkAction<Promise<void>, StateType, un
     return async (dispatch) => {
         dispatch(setSending());
         try {
-            let resp = await aXiOs.put(`/profile`, {
+            let resp = await aXiOs.put<respType>(`/profile`, {
                 userId                   : form.userId,
                 lookingForAJob           : form.LookingForAJob,
                 lookingForAJobDescription: form.LookingForAJobDescription,

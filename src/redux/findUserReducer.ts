@@ -8,7 +8,7 @@ const SET_PAGE         ='findUser/SetPage';
 const SET_COUNT        ='findUser/SetCount';
 const FOLLOW           ='findUser/onFollow';
 const IS_WATING_FOLLOW ='findUser/isWatingFollow';
-export type FinfUserADD_USERS        ={type: typeof ADD_USERS; cnt:number; page:number; mUsers: Array<FindUserUserType>;totalCount:number;};
+export type FinfUserADD_USERS        ={type: typeof ADD_USERS; cnt:number; page:number; mUsers: Array<RTT>;totalCount:number;};
 export type FinfUserSET_PAGE         ={type: typeof SET_PAGE; Page:number};
 export type FinfUserSET_COUNT        ={type: typeof SET_COUNT; count:number};
 export type FinfUserFOLLOW           ={type: typeof FOLLOW; id:number; isFollow:boolean};
@@ -95,7 +95,7 @@ export const findUserReducer = (state = initState, action:AnyActionType):FindUse
 //action creaters
 export const onFollow       = (id:number,isFollow:boolean):FinfUserFOLLOW                 => ({ type: FOLLOW           , id:id, isFollow:isFollow                                  });
 export const isWatingFollow = (id:number):FinfUserIS_WATING_FOLLOW                        => ({ type: IS_WATING_FOLLOW , id:id                                                     });
-export const addUsers       = (cnt:number, page:number, mUsers: Array<FindUserUserType>,totalCount:number):FinfUserADD_USERS      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
+export const addUsers       = (cnt:number, page:number, mUsers: Array<RTT>,totalCount:number):FinfUserADD_USERS      => ({ type: ADD_USERS        , cnt:cnt, page:page, mUsers:mUsers, totalCount:totalCount  });
 export const setPage        = (Page:number):FinfUserSET_PAGE                              => ({ type: SET_PAGE         , Page:Page                                                 });
 export type setPageType = typeof setPage;
 export const setCount       = (count:number):FinfUserSET_COUNT                            => ({ type: SET_COUNT        , count:count                                               });
@@ -117,7 +117,7 @@ export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<
                 else
                     alert(resp.data.messages);
             } else {
-                let resp = await aXiOs.delete(`follow/${id}`);
+                let resp = await aXiOs.delete<respType>(`follow/${id}`);
                 if (resp.data.resultCode === 0)
                     dispatch(onFollow(id, isFollow));
                 else
@@ -133,11 +133,24 @@ export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<
     }
 }
 export type Follow_UnFollowType =  (isFollow:boolean,id:number) =>void;
-
+ type RTT = {
+     name: string,
+     id: number,
+     photos: {
+         small: string | null,
+         large: string | null
+     },
+     status: string,
+     followed: boolean
+ }
+type RT ={
+    items: Array<RTT>,
+    totalCount:number
+}
 export const getMore         = (count:number,page:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try{
-            let resp = await aXiOs.get(`users?page=${page}&count=${count}`);
+            let resp = await aXiOs.get<RT>(`users?page=${page}&count=${count}`);
             dispatch(addUsers(count, page, resp.data.items, resp.data.totalCount));
         }catch(error){
             try {

@@ -21,7 +21,6 @@ const EditProf = (props:any) =>{
 
 const EditForm = (props:any) =>{
     useEffect(()=>{
-        debugger;
         props.initialize({
             userId                   : props.id,
             FullName                 : props.prof.fullName,

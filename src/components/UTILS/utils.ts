@@ -2,7 +2,7 @@ import Axios from "axios";
 import {createSelector} from "reselect";
 import {StateType} from "../../redux/store";
 import {FriendType} from "../../redux/navBarReducer";
-import {ProfileContactsType, ProfileStateType} from "../../redux/profileContentPageReducer";
+import {ProfileStateType} from "../../redux/profileContentPageReducer";
 
 export const aXiOs = Axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',

@@ -74,10 +74,10 @@ export const authReducer = (state = initState, action:AnyActionType):AuthStateTy
 
 
 //action creaters
-export const setMe          = (data:AuthDataType):AuthSET_ME      => ({ type: SET_ME           , data: data                                       });
-export const setLoadingMe   = ():AuthSET_LOADING_ME               => ({ type: SET_LOADING_ME                                                      });
-export const setCaptha      = (url:string):AuthSET_CAPTCHA        => ({ type: SET_CAPTCHA      , url: url                                         });
-export const setImg         = (id:number,img:string):AuthSET_IMG  => ({ type: SET_IMG          , id: id, img:img                                  });
+export const setMe          = (data:AuthDataType):AuthSET_ME           => ({ type: SET_ME           , data: data                                       });
+export const setLoadingMe   = ():AuthSET_LOADING_ME                    => ({ type: SET_LOADING_ME                                                      });
+export const setCaptha      = (url:string):AuthSET_CAPTCHA             => ({ type: SET_CAPTCHA      , url: url                                         });
+export const setImg         = (id:number,img:string):AuthSET_IMG       => ({ type: SET_IMG          , id: id, img:img                                  });
 
 //thunk creaters
 export const authMe          = ():ThunkAction<Promise<void>, StateType, void, AnyActionType> => {
