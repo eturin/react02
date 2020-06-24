@@ -105,6 +105,10 @@ type respType = {
     resultCode: number,
     messages: Array<string>
 }
+enum ResutCodes {
+    Succes= 0,
+    Error=1
+}
 //thunk creaters
 export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
@@ -112,13 +116,13 @@ export const Follow_UnFollow = (isFollow:boolean,id:number):ThunkAction<Promise<
         try {
             if (isFollow) {
                 let resp = await aXiOs.post<respType>(`follow/${id}`, {});
-                if (resp.data.resultCode === 0)
+                if (resp.data.resultCode === ResutCodes.Succes)
                     dispatch(onFollow(id, isFollow));
                 else
                     alert(resp.data.messages);
             } else {
                 let resp = await aXiOs.delete<respType>(`follow/${id}`);
-                if (resp.data.resultCode === 0)
+                if (resp.data.resultCode === ResutCodes.Succes)
                     dispatch(onFollow(id, isFollow));
                 else
                     alert(resp.data.messages)

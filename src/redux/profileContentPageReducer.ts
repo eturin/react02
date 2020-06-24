@@ -134,6 +134,10 @@ export const setLoadingProf = (id:number):ProfileSET_LOADING_P                  
 export const setSending     = ():ProfileSET_SENDING                                 => ({ type: SET_SENDING                                                         });
 export const setImage       = (id:number,img:string):ProfileSET_IMG                 => ({ type: SET_IMG          , id: id, img: img                                 });
 
+enum ResutCodes {
+    Succes= 0,
+    Error=1
+}
 //thunk creaters
 export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=> {
     return async (dispatch) => {
@@ -146,7 +150,7 @@ export const sendImg         = (file:any,userId:number):ThunkAction<Promise<void
                 }
             });
 
-            if (resp.data.resultCode === 0) {
+            if (resp.data.resultCode === ResutCodes.Succes) {
                 dispatch(setImage(userId,resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small ? resp.data.data.photos.small : ''));
                 dispatch(setImg(userId, resp.data.data.photos.large ? resp.data.data.photos.large: resp.data.data.photos.small ? resp.data.data.photos.small : ''));
             }
@@ -203,7 +207,7 @@ export const stopEditLine    = (id:number,source:string,text:InnerType<ProfileSt
         if(source==='status') {
             try {
                 let resp = await aXiOs.put<respType>(`/profile/status`, {status: text});
-                if (resp.data.resultCode === 0) {
+                if (resp.data.resultCode === ResutCodes.Succes) {
                     getProfile(id)(dispatch,getState);
                 }
             }catch(error){
@@ -251,7 +255,7 @@ export const sendProf = (form:FormType):ThunkAction<Promise<void>, StateType, un
                     youtube  : form.Youtube
                 }
             });
-            if (resp.data.resultCode === 0)
+            if (resp.data.resultCode === ResutCodes.Succes)
                 getProfile(form.userId)(dispatch,getState);
             else {
                 let inf:any = {};

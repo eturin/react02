@@ -111,6 +111,11 @@ type respType = {
     resultCode: number,
     messages: Array<string>
 }
+enum ResutCodes {
+    Succes= 0,
+    Error=1,
+    Captcha=10
+}
 export const logIn           = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> => {
     return async (dispatch) => {
         try {
@@ -120,15 +125,15 @@ export const logIn           = (form:FormType):ThunkAction<Promise<void>, StateT
                 rememberMe: form.rememberMe,
                 captcha   : form.captcha
             });
-            if (resp.data.resultCode === 0) {
+            if (resp.data.resultCode === ResutCodes.Succes) {
                 authMe()(dispatch, getState);
-            } else if (resp.data.resultCode === 1) {
+            } else if (resp.data.resultCode === ResutCodes.Error) {
                 dispatch(stopSubmit('login', {
                     login : 'error',
                     pwd   : 'error',
                     _error: resp.data.messages && resp.data.messages.length > 0 ? resp.data.messages[0] : undefined
                 }));
-            } else if (resp.data.resultCode === 10) {
+            } else if (resp.data.resultCode === ResutCodes.Captcha) {
                 const err = resp.data.messages && resp.data.messages.length > 0 ? resp.data.messages[0] : undefined;
                 const resp2 = await aXiOs.get<respType & {url:string}>(`security/get-captcha-url`);
                 dispatch(stopSubmit('login', {
@@ -153,7 +158,7 @@ export const logOut          = ():ThunkAction<Promise<void>, StateType, unknown,
     return async (dispatch) => {
         try {
             let resp = await aXiOs.post<respType>(`auth/logout`);
-            if (resp.data.resultCode === 0)
+            if (resp.data.resultCode === ResutCodes.Succes)
                 authMe()(dispatch, getState);
             else
                 alert(resp.data.messages);
