@@ -108,7 +108,7 @@ type FormType = {
     captcha?:string
 }
 type respType = {
-    resultCode: number,
+    resultCode: ResutCodes,
     messages: Array<string>
 }
 enum ResutCodes {

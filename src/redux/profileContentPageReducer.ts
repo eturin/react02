@@ -199,7 +199,7 @@ export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, 
 export type getProfileType = typeof getProfile;
 
 type respType = {
-    resultCode: number,
+    resultCode: ResutCodes,
     messages: Array<string>
 }
 export const stopEditLine    = (id:number,source:string,text:InnerType<ProfileStateType> ) :ThunkAction<Promise<void>, StateType, unknown, AnyActionType>=>{

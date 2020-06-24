@@ -102,7 +102,7 @@ export const setCount       = (count:number):FinfUserSET_COUNT                  
 export type setCountType = typeof setCount;
 
 type respType = {
-    resultCode: number,
+    resultCode: ResutCodes,
     messages: Array<string>
 }
 enum ResutCodes {

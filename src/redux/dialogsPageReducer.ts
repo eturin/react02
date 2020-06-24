@@ -197,8 +197,12 @@ export type FormType = {
     idDilog: number,
     body   : string
 }
+enum ResutCodes {
+    Succes= 0,
+    Error=1
+}
 type respType = {
-    resultCode: number,
+    resultCode: ResutCodes,
     messages: Array<string>
 }
 export const sendNewMessage = (form:FormType):ThunkAction<Promise<void>, StateType, unknown, AnyActionType> =>{
