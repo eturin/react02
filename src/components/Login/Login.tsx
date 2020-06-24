@@ -2,12 +2,19 @@ import React from "react";
 import css from './Login.module.css'
 import {Redirect} from "react-router";
 
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {requirdField} from "../UTILS/utils";
 import {Input} from "../UTILS/Control";
-import {LoginType} from "../../redux/authReducer";
+import {FormType, LoginType} from "../../redux/authReducer";
 
-const LoginForm =(props:any)=>{
+type OwnPropsType = {
+    captcha?:string;
+    onSubmit:LoginType
+}
+
+type FormPropsStateType = InjectedFormProps<FormType,OwnPropsType>
+
+const LoginForm:React.FC<FormPropsStateType & OwnPropsType> =(props)=>{
     return (
         <form onSubmit={props.handleSubmit}>
             <div className={css.Form}>
@@ -44,13 +51,13 @@ const LoginForm =(props:any)=>{
     );
 }
 
-const LoginReduxForm = reduxForm<any,any>({
+const LoginReduxForm = reduxForm<FormType, OwnPropsType>({
     form: 'login' //уникальное имя формы в state
 })(LoginForm);
 
 export type PropsStateType ={
     isAuth  :boolean;
-    id      :number|undefined;
+    id?     :number;
     url     :string;
     captcha?:string;
 };

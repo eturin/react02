@@ -101,7 +101,7 @@ export const authMe          = ():ThunkAction<Promise<void>, StateType, void, An
     }
 }
 export type authMeType = typeof authMe;
-type FormType = {
+export type FormType = {
     login: string;
     pwd:string;
     rememberMe:boolean;

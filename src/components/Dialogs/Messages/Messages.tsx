@@ -6,6 +6,7 @@ import {requirdField, maxLength} from "../../UTILS/utils";
 import { Textarea } from "../../UTILS/Control";
 import {NavLink} from "react-router-dom";
 import {DialogMessageType, getMessagesType, sendNewMessageType} from "../../../redux/dialogsPageReducer";
+import {FormType} from "../../../redux/authReducer";
 
 const maxLength100 = maxLength(100);
 
@@ -71,18 +72,14 @@ class Messages extends Component<PropsType,ST >{
 }
 export default Messages;
 
-type PST = {
+type OwnProps = {
     idDilog     : number;
     sending     : boolean;
-
+    onSubmit    : sendNewMessageType
 }
-type PDT = {
-    onSubmit    : any
-}
-
-class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>> {
+class New extends Component<InjectedFormProps<FormType,OwnProps,string> & OwnProps> {
     componentDidMount() {
-        this.props.initialize({ idDilog:this.props.idDilog });
+        this.props.initialize({ idDilog: this.props.idDilog });
     }
 
     render (){
@@ -103,7 +100,7 @@ class New extends Component<PST & InjectedFormProps<{ idDilog:number },PST,any>>
         );
     }
 }
-const NewReduxForm = reduxForm<PST ,PST & PDT,string>({
+const NewReduxForm = reduxForm<FormType,OwnProps,string>({
     form: 'NewMessage' //уникальное имя формы в state
 })(New);
 
