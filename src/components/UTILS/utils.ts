@@ -36,8 +36,8 @@ export const getInitedApp      =(state:StateType):boolean           => state.App
 export const getIDforDilog     =(state:StateType):number|undefined  => state.ProfileContentPage.id;
 
 export type InnerType<T> = T extends {[key: string]: infer R} ? R : never;
+export const getValueForDilog  =(state:StateType,source:string):string|number|undefined => (state.ProfileContentPage as any)[source] ;
 
-export const getValueForDilog  =(state:StateType,source:string):InnerType<typeof state.ProfileContentPage> => (state.ProfileContentPage as any)[source] ;
 export const getProf           =(state:StateType):ProfileStateType  => state.ProfileContentPage;
 
 //reselectors

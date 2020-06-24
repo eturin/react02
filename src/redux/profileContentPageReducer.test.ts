@@ -1,4 +1,4 @@
-import profileContentPageReducer, {initState, setSending} from "./profileContentPageReducer";
+import {profileContentPageReducer,initState, setSending} from "./profileContentPageReducer";
 
 test('Set sending',()=> {
     let newStat = profileContentPageReducer(initState, setSending());
