@@ -14,9 +14,9 @@ export let getState: ()=>StateType;
 export const setState = (f:()=>StateType) => getState= f;
 
 //validate
-export const requirdField = (val:any) => !val ? 'Обязательное поле':undefined;
+export const requirdField = (val:any):string|undefined => !val ? 'Обязательное поле':undefined;
 export const maxLength = (cnt:number) =>{
-    return (val:string|undefined) => val && val.length>cnt ? `Максимальная длина ${cnt} символов`: undefined;
+    return (val:string|undefined):string|undefined => val && val.length>cnt ? `Максимальная длина ${cnt} символов`: undefined;
 }
 
 //selectors

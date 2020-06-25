@@ -1,8 +1,14 @@
 import React, {Suspense} from "react";
 
-const withSuspense = (Component:any)=> {
-    return (props:object) => <Suspense fallback={<div>Loading...</div>}> <Component {...props} />    </Suspense>;
+function withSuspense<PT>(Component: React.ComponentType<PT>) {
+    return (props:PT) => <Suspense fallback={<div>Loading...</div>}> <Component {...props} />    </Suspense>;
 }
 
-export default withSuspense;
+/*const withSuspense = <PT extends {}>(Component: React.ComponentType<PT>):React.ReactNode => {
+    return (props:PT) => <Suspense fallback={<div>Loading...</div>}> <Component {...props} />    </Suspense>;
+}*/
+
+export default withSuspense
+
+
 

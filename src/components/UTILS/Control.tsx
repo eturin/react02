@@ -1,8 +1,8 @@
 import React from "react";
 import css from './Control.module.css'
 
-const Control = (Component:any) => {
-    return ({input, meta, ...props}:any) => {
+const Control = (Component:string) => {
+    return ({input, meta, ...props}:any):React.ReactNode => {
         const isError = meta.touched && meta.error;
         return (
             <>

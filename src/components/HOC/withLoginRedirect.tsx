@@ -8,23 +8,24 @@ import {StateType} from "../../redux/store";
 type PropsStateType = {
     isAuth: boolean
 }
+
 const mstp = (state:StateType):PropsStateType=>({isAuth: getMyID(state)!==undefined})
 type PropsDispatchType = {
     setUrl: setUrlType
 }
-const withLoginRedirect = (Component:any) => {
-    class WithRedirect extends React.Component<any,any> {
-        render() {
-            if (this.props.isAuth)
-                return <Component {...this.props}/>
-            else {
-                this.props.setUrl(window.location.pathname);
-                return <Redirect to='/login' />
-            }
-        }
+
+function withLoginRedirect<PT>(Component:React.ComponentType<PT>) {
+    const WithRedirect:React.FC<PropsStateType & PropsDispatchType> = (props) =>{
+        if (props.isAuth) {
+            const {isAuth,setUrl, ...restProps} = props;
+            return <Component {...restProps as PT}/>
+        }else {
+            props.setUrl(window.location.pathname);
+            return <Redirect to='/login'/>
+           }
     }
 
-    return connect<PropsStateType,PropsDispatchType, {} ,StateType>(mstp,{setUrl})(WithRedirect);
+    return connect<PropsStateType,PropsDispatchType, PT ,StateType>(mstp,{setUrl})(WithRedirect);
 }
 
 export default withLoginRedirect;
