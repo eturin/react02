@@ -1,12 +1,31 @@
 import React, { useEffect } from "react";
 import css from './EditProf.module.css'
 import Loading from "../../Loading/Loading";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input, Textarea} from "../../UTILS/Control";
 import Img from "../Img/Img";
 
+import {
+    FormType,
+    getProfileType,
+    ProfileStateType,
+    sendImgType,
+    sendProfType
+} from "../../../redux/profileContentPageReducer";
 
-const EditProf = (props:any) =>{
+export type PropsStateType = {
+    id?                : number;
+    prof               : ProfileStateType;
+    img?               : string;
+    form_lookingForAJob: boolean;
+}
+export type PropsDispatchType = {
+    getProfile:getProfileType;
+    sendProf:sendProfType;
+    sendImg:sendImgType;
+}
+
+const EditProf:React.FC<PropsStateType & PropsDispatchType & PropsDispatchType> = (props) =>{
     //предварительная загрузка профиля
     useEffect(()=>{
         if(props.id !== props.prof.id)
@@ -19,7 +38,7 @@ const EditProf = (props:any) =>{
         return <EditProfReduxForm {...props} onSubmit={props.sendProf}/>;
 }
 
-const EditForm = (props:any) =>{
+const EditForm:React.FC<InjectedFormProps<FormType,PropsStateType & PropsDispatchType> & PropsStateType & PropsDispatchType> = (props) =>{
     useEffect(()=>{
         props.initialize({
             userId                   : props.id,
@@ -55,8 +74,8 @@ const EditForm = (props:any) =>{
             <span className={ css.Title }>Редактирование профиля</span>
             <form onSubmit={props.handleSubmit}>
                 <div className={ css.EditProf }>
-                    <Img img={props.img} sendImg={props.sendImg} userId={props.id}/>
-                    <button disabled={props.sending} className={css.Button}>Сохранить</button>
+                    <Img img={props.img} sendImg={props.sendImg} userId={props.id ? props.id : 0}/>
+                    <button disabled={props.prof.isSending} className={css.Button}>Сохранить</button>
                     <Field component={Input}
                            name='userId'
                            type='text'
@@ -158,5 +177,5 @@ const EditForm = (props:any) =>{
     );
 }
 
-const EditProfReduxForm = reduxForm({form: 'editProf'})(EditForm);
+const EditProfReduxForm = reduxForm<FormType,PropsStateType & PropsDispatchType>({form: 'editProf'})(EditForm);
 export default EditProf;

@@ -18,14 +18,14 @@ export type ProfileSET_IMG          ={type: typeof SET_IMG;id:number;img:string;
 type AnyActionType =  ProfileSET_PROFILE | ProfileSET_STATUS | ProfileSET_LOADING_P | ProfileSET_SENDING | ProfileSET_IMG | AuthSET_IMG;
 
 export type ProfileContactsType = {
-    github?   : string | null;
-    vk?       : string | null;
-    facebook? : string | null;
-    instagram?: string | null;
-    twitter?  : string | null;
-    website?  : string | null;
-    youtube?  : string | null;
-    mainLink? : string | null;
+    github?   : string ;
+    vk?       : string ;
+    facebook? : string ;
+    instagram?: string ;
+    twitter?  : string ;
+    website?  : string ;
+    youtube?  : string ;
+    mainLink? : string ;
 }
 export type ProfilePostType ={
     id: number;
@@ -196,7 +196,7 @@ export const getProfile      = (id:number|undefined):ThunkAction<Promise<void>, 
         }
     }
 }
-export type getProfileType = typeof getProfile;
+export type getProfileType = (id:number|undefined) => void;
 
 type respType = {
     resultCode: ResutCodes,
@@ -221,7 +221,7 @@ export const stopEditLine    = (id:number,source:string,text:InnerType<ProfileSt
     }
 }
 export type stopEditLineType = (id:number,source:string,text:InnerType<ProfileStateType>) => void;
-type FormType = {
+export type FormType = {
     userId:number;
     LookingForAJob:boolean;
     LookingForAJobDescription:string;
@@ -279,3 +279,4 @@ export const sendProf = (form:FormType):ThunkAction<Promise<void>, StateType, un
         }
     }
 }
+export type sendProfType = (form:FormType) => void

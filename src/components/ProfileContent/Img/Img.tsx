@@ -3,7 +3,7 @@ import css from './Img.module.css'
 import {sendImgType} from "../../../redux/profileContentPageReducer";
 
 export type PropsStateType ={
-    img? :string,
+    img?  :string,
     userId: number
 };
 export type PropsDispatchType ={
