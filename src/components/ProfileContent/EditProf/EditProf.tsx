@@ -21,11 +21,11 @@ export type PropsStateType = {
 }
 export type PropsDispatchType = {
     getProfile:getProfileType;
-    sendProf:sendProfType;
-    sendImg:sendImgType;
+    sendProf  :sendProfType;
+    sendImg   :sendImgType;
 }
 
-const EditProf:React.FC<PropsStateType & PropsDispatchType & PropsDispatchType> = (props) =>{
+const EditProf:React.FC<PropsStateType & PropsDispatchType> = (props) =>{
     //предварительная загрузка профиля
     useEffect(()=>{
         if(props.id !== props.prof.id)
