@@ -5,8 +5,8 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {requirdField, maxLength} from "../../UTILS/utils";
 import { Textarea } from "../../UTILS/Control";
 import {NavLink} from "react-router-dom";
-import {DialogMessageType, getMessagesType, sendNewMessageType} from "../../../redux/dialogsPageReducer";
-import {FormType} from "../../../redux/authReducer";
+import {DialogMessageType, FormType, getMessagesType, sendNewMessageType} from "../../../redux/dialogsPageReducer";
+
 
 const maxLength100 = maxLength(100);
 
